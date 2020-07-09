@@ -27,7 +27,7 @@
               <div class="card-body">
                 <h1>Login</h1>
                 <p class="text-muted">Masukan username dan password</p>
-                <?php echo form_open('Login/chek_login');?>
+                <?php echo form_open('Auth/chek_login');?>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
