@@ -152,8 +152,8 @@
             <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
             <li class="nav-header">MENU UTAMA</li>
-            <li class="nav-item has-treeview menu-open">
-                <a href="<?= base_url('dashboard');?>" class="nav-link active">
+            <li class="nav-item has-treeview">
+                <a href="<?= base_url('dashboard');?>" class="nav-link <?php if($this->uri->segment('1') == 'dashboard'){ echo "active";}?>">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     Dashboard
@@ -161,7 +161,7 @@
                 </a>
             </li>
             <li class="nav-item has-treeview">
-                <a href="<?= base_url('karyawan');?>" class="nav-link">
+                <a href="<?= base_url('karyawan');?>" class="nav-link <?php if($this->uri->segment('1') == 'karyawan'){ echo "active";}?>">
                 <i class="nav-icon fas fa-male"></i>
                 <p>
                     Data Karyawan
