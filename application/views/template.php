@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= base_url()?>assets/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="<?= base_url()?>assets/plugins/css/fontawesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
@@ -26,6 +25,9 @@
     <link rel="stylesheet" href="<?= base_url()?>assets/plugins/css/summernote-bs4.min.css">
     <!-- sweetalert -->
     <link rel="stylesheet" href="<?= base_url()?>assets/plugins/sweetalert/sweetalert.css">
+    <!-- Datatable -->
+    <link rel="stylesheet" href="<?= base_url()?>assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?= base_url()?>assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -222,7 +224,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
             <div class="col-sm-9">
-                <h1 class="m-0 text-dark">Dashboard</h1>
+                <h1 class="m-0 text-dark"><?php if($this->uri->segment('1') == 'dashboard'){ echo "Dashboard";}
+                elseif($this->uri->segment('1') == 'karyawan'){ echo "Data Karyawan";}?></h1>
             </div><!-- /.col -->
             <div class="col-sm-3">
                 <div class="info-box">
@@ -282,8 +285,13 @@
 <script src="<?= base_url()?>assets/plugins/js/adminlte.js"></script>
 <!-- sweetalert -->
 <script src="<?= base_url()?>assets/plugins/sweetalert/sweetalert.min.js"></script>
+<!-- Datatable -->
+<script src="<?= base_url()?>assets/plugins/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url()?>assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?= base_url()?>assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?= base_url()?>assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script>
-        $('#menu').on('click', '#keluar', function () {
+    $('#menu').on('click', '#keluar', function () {
         swal({
             title: "Oppss",
             text: "Yakin Ingin Keluar ?",
@@ -304,6 +312,87 @@
         }
         });   
     });
-  </script>
+
+//     $('#comboDepartement').on('change', function(e){
+//     $.ajax( {
+//         success: function(html) {
+//         // console_log(html);
+//         var departement = $("#comboDepartement option:selected").attr("value");
+//         $('#blockBagian').show();
+//         if(departement == "finishing"){
+//             status = '<button type="button" class="btn btn-block btn-success btn-lg">FINISHING</button>';
+//         }else if(departement == "spinning"){
+//             status = '<button type="button" class="btn btn-block btn-secondary btn-lg">SPINNING</button>';
+//         }else{
+//             status = '<button type="button" class="btn btn-block btn-primary btn-lg">WEAVING</button>';
+//         }
+//         $('#blockBagian').html(status);
+//         }
+//     });
+// });
+
+$('#comboStatus').on('change', function(e){
+    $.ajax( {
+        success: function(html) {
+            var statusKaryawan = $("#comboStatus option:selected").attr("value");
+            $('#rangeDate').show();
+            if(statusKaryawan == "magang"){
+                status = '<div class="col-sm-6">';
+                status +=   '<div class="form-group">';
+                status +=       '<label>Mulai Tanggal :</label>';
+                status +=       '<div class="input-group date" id="tglMulai" data-target-input="nearest">';
+                status +=           '<input type="text" id="tanggalMulai" class="form-control datetimepicker-input" data-target="#tglMulai"/>';
+                status +=           '<div class="input-group-append" data-target="#tglMulai" data-toggle="datetimepicker">';
+                status +=               '<div class="input-group-text"><i class="fa fa-calendar"></i></div>';
+                status +=           '</div>';
+                status +=       '</div>';
+                status +=   '</div>';
+                status += '</div>';
+
+                status += '<div class="col-sm-6">';
+                status +=   '<div class="form-group">';
+                status +=       '<label>Habis Tanggal :</label>';
+                status +=           '<div class="input-group date" id="tglHabis" data-target-input="nearest">';
+                status +=               '<input type="text" id="tanggalHabis" class="form-control datetimepicker-input" data-target="#tglHabis"/>';
+                status +=               '<div class="input-group-append" data-target="#tglHabis" data-toggle="datetimepicker">';
+                status +=                   '<div class="input-group-text"><i class="fa fa-calendar"></i></div>';
+                status +=               '</div>';
+                status +=           '</div>';
+                status +=   '</div>';
+                status += '</div>';
+            }else{
+                $('#rangeDate').hide();
+            }
+            $('#rangeDate').html(status);
+            $('#tglHabis').datetimepicker({
+                format: 'DD MMM YYYY'
+            });
+            $('#tglMulai').datetimepicker({
+                format: 'DD MMM YYYY'
+            });
+        }
+    });
+});
+</script>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+        });
+    });
+    $('#tglMasuk').datetimepicker({
+        format: 'DD MMM YYYY'
+    });
+    $('#tglLahir').datetimepicker({
+        format: 'DD MMM YYYY'
+    });
+
+    $(document).ready(function(){
+        $('#file_gambar').change(function(){
+            readURL(this);
+        });
+    });
+</script>
 </body>
 </html>
