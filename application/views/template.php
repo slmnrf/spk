@@ -341,7 +341,7 @@ $('#comboStatus').on('change', function(e){
                 status +=   '<div class="form-group">';
                 status +=       '<label>Mulai Tanggal :</label>';
                 status +=       '<div class="input-group date" id="tglMulai" data-target-input="nearest">';
-                status +=           '<input type="text" id="tanggalMulai" class="form-control datetimepicker-input" data-target="#tglMulai"/>';
+                status +=           '<input type="text" id="tanggalMulai" name="tanggalMulai" class="form-control datetimepicker-input" data-target="#tglMulai"/>';
                 status +=           '<div class="input-group-append" data-target="#tglMulai" data-toggle="datetimepicker">';
                 status +=               '<div class="input-group-text"><i class="fa fa-calendar"></i></div>';
                 status +=           '</div>';
@@ -353,7 +353,7 @@ $('#comboStatus').on('change', function(e){
                 status +=   '<div class="form-group">';
                 status +=       '<label>Habis Tanggal :</label>';
                 status +=           '<div class="input-group date" id="tglHabis" data-target-input="nearest">';
-                status +=               '<input type="text" id="tanggalHabis" class="form-control datetimepicker-input" data-target="#tglHabis"/>';
+                status +=               '<input type="text" id="tanggalHabis" name="tanggalHabis" class="form-control datetimepicker-input" data-target="#tglHabis"/>';
                 status +=               '<div class="input-group-append" data-target="#tglHabis" data-toggle="datetimepicker">';
                 status +=                   '<div class="input-group-text"><i class="fa fa-calendar"></i></div>';
                 status +=               '</div>';
@@ -365,10 +365,10 @@ $('#comboStatus').on('change', function(e){
             }
             $('#rangeDate').html(status);
             $('#tglHabis').datetimepicker({
-                format: 'DD MMM YYYY'
+                format: 'DD-MM-YYYY'
             });
             $('#tglMulai').datetimepicker({
-                format: 'DD MMM YYYY'
+                format: 'DD-MM-YYYY'
             });
         }
     });
@@ -382,10 +382,10 @@ $('#comboStatus').on('change', function(e){
         });
     });
     $('#tglMasuk').datetimepicker({
-        format: 'DD MMM YYYY'
+        format: 'DD-MM-YYYY'
     });
     $('#tglLahir').datetimepicker({
-        format: 'DD MMM YYYY'
+        format: 'DD-MM-YYYY'
     });
 
     $(document).ready(function(){
@@ -393,6 +393,35 @@ $('#comboStatus').on('change', function(e){
             readURL(this);
         });
     });
+</script>
+<script type="text/javascript">
+    var table;
+    $(document).ready(function() {
+
+        //datatables
+        table = $('#tabelKaryawan').DataTable({ 
+
+            "processing": true, 
+            "serverSide": true, 
+            "order": [], 
+            
+            "ajax": {
+                "url": "<?php echo site_url('Karyawan/get_data_karyawan')?>",
+                "type": "POST"
+            },
+
+            
+            "columnDefs": [
+            { 
+                "targets": [ 0 ], 
+                "orderable": false, 
+            },
+            ],
+
+        });
+
+    });
+
 </script>
 </body>
 </html>
