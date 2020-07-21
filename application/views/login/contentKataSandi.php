@@ -92,9 +92,45 @@
                     $("#namaLengkap").val("");
                     $("#username").val("");
                     $("#password").val("");
+                    $("#inputAkses").empty()
                 }
             });
           }
           });
         }
+
+    function hapus(no){
+        swal({
+            title: "Oppss",
+            text: "Yakin Ingin Menghapus?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonClass: 'btn-success',
+            confirmButtonText: 'Yakin',
+            cancelButtonText: 'Tidak',
+        },
+        function (isConfirm) {
+            if(isConfirm){
+                $.ajax({
+                type: 'GET',
+                url: '<?php echo base_url() ?>Auth/hapusAkun',
+                data: '&no=' + no,
+                success: function (data) {
+                        swal({
+                        title: "Yeah",
+                        text: "Data Berhasil Dihapus !",
+                        confirmButtonClass: 'btn-success',
+                        confirmButtonText: 'Kembali',
+                    },
+                    function (isConfirm) {
+                        if(isConfirm){
+                          window.location.reload();
+                        }
+                    });
+                    }
+                })
+            }
+        });   
+    }
     </script>

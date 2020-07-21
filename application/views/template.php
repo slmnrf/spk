@@ -295,6 +295,7 @@
             text: "Yakin Ingin Keluar ?",
             type: "warning",
             showCancelButton: true,
+            confirmButtonColor: '#3085d6',
             confirmButtonClass: 'btn-success',
             confirmButtonText: 'Yakin',
             cancelButtonText: 'Tidak',

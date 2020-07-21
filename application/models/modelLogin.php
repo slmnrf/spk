@@ -29,7 +29,13 @@ Class modelLogin extends CI_Model {
         $this->db->from($table);
         $hasil = $this->db->get();
         return $hasil->result();
-    }
+	}
+	
+	function hapus($no){
+		$this->db->where('no', $no);
+        $this->db->delete('login');
+        return;
+	}
 
 }
 

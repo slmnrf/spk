@@ -67,7 +67,7 @@ class Auth extends CI_Controller {
                     <td>'.$row->namaLengkap.'</td>
                     <td>'.$row->userName.'</td>
                     <td>'.$akses.'</td>
-                    <td>#</td>
+                    <td><a href="#" onclick="javascipt: hapus('.$row->no.')"><i class="fa fa-eraser"></i></a></td>
                     </tr>';
                 }
                 $html['tabel'] .= '</tbody>
@@ -114,11 +114,17 @@ class Auth extends CI_Controller {
                     <td>'.$row->namaLengkap.'</td>
                     <td>'.$row->userName.'</td>
                     <td>'.$akses.'</td>
-                    <td>#</td>
+                    <td><a href="#" onclick="javascipt: hapus('.$row->no.')"><i class="fa fa-eraser"></i></a></td>
                     </tr>';
                 }
                 $html .= '</tbody>
             </table>';
         echo $html;
+    }
+
+    function hapusAkun(){
+        $no = $_GET['no'];
+        $this->modelLogin->hapus($no);
+        redirect('kelolaakun');
     }
 }
