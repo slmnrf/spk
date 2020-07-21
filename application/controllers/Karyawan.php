@@ -105,6 +105,76 @@ class Karyawan extends CI_Controller {
 			$this->modelKaryawan->tambahKaryawan('karyawan', $dataKaryawan);
 			$this->modelKaryawan->tambahStatus('status',$dataStatus);
 		}
+    }
+    
+	function editData(){
+		$nik = $this->input->post('detailNik');
+		$namaLengkap = $this->input->post('detailNamaLengkap');
+		$jenisKelamin = $this->input->post('jenisKelaminEdit');
+		$tempatLahir = $this->input->post('detailTempatLahir');
+		$tanggalLahir = $this->input->post('detailTanggalLahir');
+		$explode = explode("-", $tanggalLahir);
+		$tglLahir = $explode[2]."-".$explode[1]."-".$explode[0];
+		$alamat = $this->input->post('detailAlamat');
+		$comboDepartement = $this->input->post('editDepartement');
+		$tanggalMasuk = $this->input->post('detailTanggalMasuk');
+		$explode1 = explode("-", $tanggalMasuk);
+		$tglMasuk = $explode1[2]."-".$explode1[1]."-".$explode1[0];
+		$comboStatus = $this->input->post('editStatus');
+		$tanggalMulai = $this->input->post('detailTanggalMulai');
+		$explode2 = explode("-", $tanggalMulai);
+		$tglMulai = $explode2[2]."-".$explode2[1]."-".$explode2[0];
+		$tanggalHabis = $this->input->post('detailTanggalHabis');
+		$explode3 = explode("-", $tanggalHabis);
+		$tglHabis = $explode3[2]."-".$explode3[1]."-".$explode3[0];
+
+		$config['upload_path']="./assets/photo/"; //path folder file upload
+		$config['allowed_types']='jpg|png'; //type file yang boleh di upload
+		$config['file_name'] = $nik;
+        $this->upload->initialize($config);
+    
+		if(!$this->upload->do_upload('detailFile_gambar')){ //upload file
+            echo 0;
+            $dataKaryawan = array(
+				'namaLengkap' => $namaLengkap,
+				'jenisKelamin' => $jenisKelamin,
+				'tempatLahir'     => $tempatLahir,
+				'tanggalLahir' => $tglLahir,
+				'departement' => $comboDepartement,
+				'alamat' => $alamat,
+				'foto' => $gambar['file_name']
+			);
+	
+			$dataStatus = array(
+				'tanggalMasuk' => $tglMasuk,
+				'statusKaryawan' => $comboStatus,
+				'mulaiTanggal' => $tglMulai,
+				'habisTanggal' => $tglHabis
+            );
+        }else{
+            echo 1;
+            unlink("./assets/photo/".$nik);
+			$gambar = $this->upload->data();
+			
+			$dataKaryawan = array(
+				'namaLengkap' => $namaLengkap,
+				'jenisKelamin' => $jenisKelamin,
+				'tempatLahir'     => $tempatLahir,
+				'tanggalLahir' => $tglLahir,
+				'departement' => $comboDepartement,
+				'alamat' => $alamat,
+				'foto' => $gambar['file_name']
+			);
+	
+			$dataStatus = array(
+				'tanggalMasuk' => $tglMasuk,
+				'statusKaryawan' => $comboStatus,
+				'mulaiTanggal' => $tglMulai,
+				'habisTanggal' => $tglHabis
+            );
+		}
+            $queryakun = $this->modelKaryawan->editAkun('karyawan',array('nik' => $nik),$dataKaryawan);
+            $querystatus =$this->modelKaryawan->editAkun('status',array('nik' => $nik),$dataStatus);
 	}
 
 	function detailKaryawan() {
@@ -140,7 +210,7 @@ class Karyawan extends CI_Controller {
 	}
 	
 	function cmbJenisKelamin(){
-        $cmb = '<select id="jenisKelaminEdit" class="form-control">';
+        $cmb = '<select id="jenisKelaminEdit" name="jenisKelaminEdit" class="form-control">';
         $data = $this->modelKaryawan->cmbKaryawan($_GET['nik']);
         foreach ($data as $row){
         if ($row->jenisKelamin == "L") {
@@ -156,7 +226,7 @@ class Karyawan extends CI_Controller {
 	}
 	
 	function cmbDepartement(){
-		$cmb = '<select id="editDepartement" class="form-control">';
+		$cmb = '<select id="editDepartement" name="editDepartement" class="form-control">';
         $data = $this->modelKaryawan->cmbKaryawan($_GET['nik']);
         foreach ($data as $row){
         if ($row->departement == "spinning") {
@@ -181,7 +251,7 @@ class Karyawan extends CI_Controller {
         $data= $this->modelKaryawan->cmbKaryawan($_GET['nik']);
         foreach ($data as $row){
             if ($row->statusKaryawan == "tetap") {
-        $cmb = '<select id="editStatus" class="form-control" disabled>
+        $cmb = '<select id="editStatus" name="editStatus" class="form-control" disabled>
         <option value="tetap" selected>Tetap</option>
         <option value="magang">Magang</option>';
     }else{

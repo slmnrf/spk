@@ -277,7 +277,7 @@
         </div>
         <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-            <button type="submit" class="btn btn-primary" id="submit">Simpan</button>
+            <button type="submit" class="btn btn-primary" id="submitEditButton">Ubah</button>
         </div>
             </form>
         </div>
@@ -428,4 +428,36 @@ if (input.files && input.files[0]) {
 }
 }
 
+$(document).ready(function(){
+    $('#submitEdit').on('submit',function(e){
+    e.preventDefault(); 
+    $.ajax({
+            url:'<?php echo base_url();?>Karyawan/editData',
+            type:"POST", //method Submit
+            data:new FormData(this), //penggunaan FormData
+            processData:false,
+            contentType:false,
+            cache:false,
+            async:false,
+            success: function (cek) {
+            if (cek == 0){
+                swal("Sorry", "Gagal Upload", "warning");
+                }else{
+                swal({
+                    title: "Yeah",
+                    text: "Tambah Data Sukses !",
+                    type: "success",
+                    confirmButtonClass: 'btn-success',
+                    confirmButtonText: 'Ok',
+                },
+                function (isConfirm){
+                    if(isConfirm){
+                        window.location.reload();
+                    }
+                });
+            }
+            }
+        }); 
+});
+});
 </script>
