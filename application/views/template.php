@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard</title>
+    <link rel="icon" type="image/png" href="./assets/gambar/logo.png">
+    <title>PT. LOKATEX</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -141,8 +142,8 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
-        <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
-        <span class="brand-text font-weight-light">SPK</span>
+        <img src="./assets/gambar/logo_dashboard.png" alt="Logo" style="opacity: .8">
+        <!-- <span class="brand-text font-weight-light">Sistem Perpanjangan Kontrak Kerja PT. LOKATEX</span> -->
         </a>
 
         <!-- Sidebar -->
@@ -195,10 +196,10 @@
             </li>
             <li class="nav-header">LAIN-LAIN</li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="<?= base_url('kelolaakun');?>" class="nav-link <?php if($this->uri->segment('1') == 'kelolaakun'){ echo "active";}?>">
                 <i class="nav-icon far fa-edit"></i>
                 <p>
-                    Ubah Kata Sandi
+                    Kelola Akun
                 </p>
                 </a>
             </li>
@@ -247,11 +248,8 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-        All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.1.0-pre
-        </div>
+        <img src="./assets/gambar/logo.png" width="22px">
+        <strong>Sistem Perpanjangan Kontrak PT. LOKATEX.</strong>
     </footer>
     </div>
 <!-- ./wrapper -->
@@ -313,24 +311,6 @@
         });   
     });
 
-//     $('#comboDepartement').on('change', function(e){
-//     $.ajax( {
-//         success: function(html) {
-//         // console_log(html);
-//         var departement = $("#comboDepartement option:selected").attr("value");
-//         $('#blockBagian').show();
-//         if(departement == "finishing"){
-//             status = '<button type="button" class="btn btn-block btn-success btn-lg">FINISHING</button>';
-//         }else if(departement == "spinning"){
-//             status = '<button type="button" class="btn btn-block btn-secondary btn-lg">SPINNING</button>';
-//         }else{
-//             status = '<button type="button" class="btn btn-block btn-primary btn-lg">WEAVING</button>';
-//         }
-//         $('#blockBagian').html(status);
-//         }
-//     });
-// });
-
 $('#comboStatus').on('change', function(e){
     $.ajax( {
         success: function(html) {
@@ -373,6 +353,7 @@ $('#comboStatus').on('change', function(e){
         }
     });
 });
+
 </script>
 <script>
     $(function () {
@@ -381,16 +362,29 @@ $('#comboStatus').on('change', function(e){
         "autoWidth": false,
         });
     });
+
     $('#tglMasuk').datetimepicker({
         format: 'DD-MM-YYYY'
     });
     $('#tglLahir').datetimepicker({
         format: 'DD-MM-YYYY'
     });
+    $('#detailtglMasuk').datetimepicker({
+        format: 'DD-MM-YYYY'
+    });
+    $('#detailtglLahir').datetimepicker({
+        format: 'DD-MM-YYYY'
+    });
 
     $(document).ready(function(){
         $('#file_gambar').change(function(){
             readURL(this);
+        });
+    });
+
+    $(document).ready(function(){
+        $('#detailFile_gambar').change(function(){
+            readURLedit(this);
         });
     });
 </script>
@@ -421,7 +415,6 @@ $('#comboStatus').on('change', function(e){
         });
 
     });
-
 </script>
 </body>
 </html>

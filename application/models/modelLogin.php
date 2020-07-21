@@ -13,12 +13,8 @@ Class modelLogin extends CI_Model {
 		return $this->db->query("select * from login $where;");
 	}
 
-    Public function save($password_baru) {
-	  	$pass = md5($password_baru);
-	  	$data = array (
-	   		'password' => $pass
-	   	);
-	  	$this->db->update('login', $data);
+    function simpan($table,$data) {
+		return $this->db->insert($table,$data);
 	}
 
 	Public function cek_old() {
@@ -27,6 +23,14 @@ Class modelLogin extends CI_Model {
 	    $query = $this->db->get('login');
 	    return $query->result();;
 	}
+
+	function tampilakun($table){
+        $this->db->select('*');
+        $this->db->from($table);
+        $hasil = $this->db->get();
+        return $hasil->result();
+    }
+
 }
 
 ?>

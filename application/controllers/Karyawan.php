@@ -106,4 +106,91 @@ class Karyawan extends CI_Controller {
 			$this->modelKaryawan->tambahStatus('status',$dataStatus);
 		}
 	}
+
+	function detailKaryawan() {
+		$detail = $this->modelKaryawan->detailKaryawan($_GET['nik']);
+		$tglLahir = explode("-", $detail['tanggalLahir']);
+		$tanggalLahir = $tglLahir[2]."-".$tglLahir[1]."-".$tglLahir[0];
+
+		$tglMasuk = explode("-", $detail['tanggalMasuk']);
+		$tanggalMasuk = $tglMasuk[2]."-".$tglMasuk[1]."-".$tglMasuk[0];
+
+		$tglMulai = explode("-", $detail['mulaiTanggal']);
+		$tanggalMulai = $tglMulai[2]."-".$tglMulai[1]."-".$tglMulai[0];
+
+		$tglHabis = explode("-", $detail['habisTanggal']);
+		$tanggalHabis = $tglHabis[2]."-".$tglHabis[1]."-".$tglHabis[0];
+
+		$foto = '<img class="profile-user-img img-fluid img-square" id="detailprev_foto" src="./assets/photo/'.$detail['foto'].'" width="100" height="100" alt="Preview Image">';
+        $data = array(
+            'nik' => $detail['nik'],
+            'namaLengkap' => $detail['namaLengkap'],
+            'jenisKelamin' => $detail['jenisKelamin'],
+            'tempatLahir' => $detail['tempatLahir'],
+            'tanggalLahir' => $tanggalLahir,
+            'alamat' => $detail['alamat'],
+            'departement' => $detail['departement'],
+            'foto' => $foto,
+            'tanggalMasuk'=> $tanggalMasuk,
+            'statusKaryawan' => $detail['statusKaryawan'],
+            'mulaiTanggal' => $tanggalMulai,
+            'habisTanggal' => $tanggalHabis,
+        );
+        echo json_encode($data);
+	}
+	
+	function cmbJenisKelamin(){
+        $cmb = '<select id="jenisKelaminEdit" class="form-control">';
+        $data = $this->modelKaryawan->cmbKaryawan($_GET['nik']);
+        foreach ($data as $row){
+        if ($row->jenisKelamin == "L") {
+            $cmb .='<option value="L" selected>Laki-laki</option>
+            <option value="P">Perempuan</option>';
+        }else{
+            $cmb .='<option value="L">Laki-laki</option>
+            <option value="P" selected>Perempuan</option>';
+        }
+    }
+    $cmb .= '</select>';
+    echo $cmb;
+	}
+	
+	function cmbDepartement(){
+		$cmb = '<select id="editDepartement" class="form-control">';
+        $data = $this->modelKaryawan->cmbKaryawan($_GET['nik']);
+        foreach ($data as $row){
+        if ($row->departement == "spinning") {
+            $cmb .='<option value="spinning" selected>Spinning</option>
+            <option value="weaving">Weaving</option>
+            <option value="finishing">Finishing</option>';
+        }elseif ($row->departement == "weaving") {
+            $cmb .='<option value="spinning">Spinning</option>
+            <option value="weaving" selected>Weaving</option>
+            <option value="finishing">Finishing</option>';
+        }else{
+			$cmb .='<option value="spinning">Spinning</option>
+            <option value="weaving">Weaving</option>
+            <option value="finishing" selected>Finishing</option>';
+        }
+    }
+    $cmb .= '</select>';
+    echo $cmb;
+	}
+
+	function cmbStatus(){
+        $data= $this->modelKaryawan->cmbKaryawan($_GET['nik']);
+        foreach ($data as $row){
+            if ($row->statusKaryawan == "tetap") {
+        $cmb = '<select id="editStatus" class="form-control" disabled>
+        <option value="tetap" selected>Tetap</option>
+        <option value="magang">Magang</option>';
+    }else{
+            $cmb = '<select id="editStatus" class="form-control">
+			<option value="tetap">Tetap</option>
+            <option value="magang" selected>Magang</option>';
+        }
+    }
+    $cmb .= '</select>';
+    echo $cmb;
+	}
 }

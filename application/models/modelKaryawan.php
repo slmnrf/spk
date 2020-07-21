@@ -94,6 +94,19 @@ Class modelKaryawan extends CI_Model {
     }
     return $kd."-".date('y');
 }
+
+function detaiLKaryawan($nik){
+  $sql = "select a.nik, a.namaLengkap, a.jenisKelamin, a.tempatLahir, a.tanggalLahir, a.alamat, a.departement, a.foto,
+          b.tanggalMasuk, b.statusKaryawan, b.mulaiTanggal, b.habisTanggal from karyawan as a, status as b where a.nik=b.nik and a.nik='$nik' ";
+  $detail = $this->db->query($sql)->row_Array();
+  return $detail;
+}
+
+function cmbKaryawan($nik){
+    $sql = "select a.jenisKelamin, a.departement, b.statusKaryawan FROM karyawan as a, status as b WHERE a.nik=b.nik and a.nik='$nik'";
+    $data = $this->db->query($sql)->result();
+    return $data;
+}
 }
 
 ?>

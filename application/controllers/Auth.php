@@ -40,4 +40,85 @@ class Auth extends CI_Controller {
         $this->session->sess_destroy();
         $this->load->view('login/Vlogin');
     }
+
+    function kelolaakun(){        
+        $dataakun = $this->modelLogin->tampilAkun('login');
+        $akses="";
+        $no=1;
+        $html['tabel'] = '<table class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Nama Lengkap</th>
+                    <th>Username</th>
+                    <th>Hak Akses</th>
+                    <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody>';
+                foreach($dataakun as $row){
+                if($row->hakAkses == '1'){
+                    $akses = "HRD";
+                }else{
+                    $akses = "SDM Produksi";
+                }
+                $html['tabel'] .='<tr> 
+                    <td>'.$no++.'</td>
+                    <td>'.$row->namaLengkap.'</td>
+                    <td>'.$row->userName.'</td>
+                    <td>'.$akses.'</td>
+                    <td>#</td>
+                    </tr>';
+                }
+                $html['tabel'] .= '</tbody>
+            </table>';
+        $this->template->load('template','login/contentKataSandi',$html);
+    }
+
+    function tambahAkun() {          
+        $namaLengkap = $_GET['namaLengkap'];
+        $username = $_GET['username'];
+        $password = $_GET['password'];
+        $inputAkses = $_GET['inputAkses'];
+
+        $data = array(
+            'namaLengkap' => $namaLengkap,
+            'userName'      => $username,
+            'password'     => md5($password),
+            'hakAkses' => $inputAkses
+        );
+        $this->modelLogin->simpan('login', $data);
+        
+        $dataakun = $this->modelLogin->tampilAkun('login');
+        $akses="";
+        $no=1;
+        $html = '<table class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Nama Lengkap</th>
+                    <th>Username</th>
+                    <th>Hak Akses</th>
+                    <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody>';
+                foreach($dataakun as $row){
+                if($row->hakAkses == '1'){
+                    $akses = "HRD";
+                }else{
+                    $akses = "SDM Produksi";
+                }
+                $html .='<tr> 
+                    <td>'.$no++.'</td>
+                    <td>'.$row->namaLengkap.'</td>
+                    <td>'.$row->userName.'</td>
+                    <td>'.$akses.'</td>
+                    <td>#</td>
+                    </tr>';
+                }
+                $html .= '</tbody>
+            </table>';
+        echo $html;
+    }
 }

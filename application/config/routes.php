@@ -53,5 +53,6 @@ $route['default_controller'] = 'auth/login';
 $route['login'] = 'auth/login';
 $route['dashboard'] = 'dashboard';
 $route['karyawan'] = 'karyawan';
+$route['kelolaakun'] = 'auth/kelolaakun';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

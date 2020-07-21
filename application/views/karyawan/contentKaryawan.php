@@ -7,8 +7,8 @@
 
         <div class="card">
         <div class="card-header">
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-lg">
-            <i class="fa fa-user-plus" aria-hidden="true"> Tambah Data Karyawan</i>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
+                <span class="fa fa-user-plus"> Tambah Data Karyawan</span>
             </button>
         </div>
         <!-- /.card-header -->
@@ -172,14 +172,14 @@
 <div class="modal fade" id="modal-detail">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-        <div class="modal-header bg-success">
+        <div class="modal-header bg-info">
             <h4 class="modal-title">Detail Data Karyawan</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-        <form id="submit">
+        <form id="submitEdit">
             <div class="row">
                 <div class="col-sm-6">
                     <!-- text input -->
@@ -190,8 +190,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                    <img class="profile-user-img img-fluid img-square"
-                        id="prev_foto" src="./assets/photo/default.jpg" width="100" height="100" alt="Preview Image">
+                    <div id="detailprev"></div>
                     </div>
                 </div>
             </div>
@@ -211,7 +210,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                     <label>Memilih Photo :</label>
-                        <input type="file" id="file_gambar" name="file_gambar">
+                        <input type="file" id="detailFile_gambar" name="detailFile_gambar">
                     </div>
                 </div>
             </div>
@@ -230,9 +229,9 @@
                     </div>
                     <div class="form-group">
                         <label>Tanggal Lahir :</label>
-                        <div class="input-group date" id="tglLahir" data-target-input="nearest">
-                            <input type="text" id="detailTanggalLahir" name="detailTanggalLahir" class="form-control datepickerku" data-target="#tglLahir"/>
-                            <div class="input-group-append" data-target="#tglLahir" data-toggle="datetimepicker">
+                        <div class="input-group date" id="detailtglLahir" data-target-input="nearest">
+                            <input type="text" id="detailTanggalLahir" name="detailTanggalLahir" class="form-control datepickerku" data-target="#detailtglLahir"/>
+                            <div class="input-group-append" data-target="#detailtglLahir" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
@@ -244,23 +243,14 @@
                 <!-- select -->
                     <div class="form-group">
                     <label>Jenis Kelamin :</label>
-                    <select id="jenisKelamin" name="jenisKelamin" class="form-control">
-                        <option value="L">Laki-laki</option>
-                        <option value="p">Perempuan</option>
-                    </select>
+                    <div id="jenisKelaminEdit"></div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                     <label>Departement :</label>
-                    <select class="form-control" id="comboDepartement" name="comboDepartement">
-                        <option value="spinning">Spinning</option>
-                        <option value="weaving">Weaving</option>
-                        <option value="finishing">Finishing</option>
-                    </select>
+                    <div id="departementEdit"></div>
                     </div>
-                    <!-- tempat block -->
-                    <!-- <span id="blockBagian"></span> -->
                 </div>
             </div>
             <hr>
@@ -268,9 +258,9 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Tanggal Masuk :</label>
-                        <div class="input-group date" id="tglMasuk"  data-target-input="nearest">
-                            <input type="text" id="tanggalMasuk" name="tanggalMasuk" class="form-control datepickerku" data-target="#tglMasuk"/>
-                            <div class="input-group-append" data-target="#tglMasuk" data-toggle="datetimepicker">
+                        <div class="input-group date" id="detailtglMasuk"  data-target-input="nearest">
+                            <input type="text" id="detailTanggalMasuk" name="detailTanggalMasuk" class="form-control datepickerku" data-target="#detailtglMasuk"/>
+                            <div class="input-group-append" data-target="#detailtglMasuk" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
@@ -279,18 +269,15 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                     <label>Status Karyawan :</label>
-                    <select class="form-control" id="comboStatus" name="comboStatus">
-                        <option value="tetap">Tetap</option>
-                        <option value="magang">Magang</option>
-                    </select>
+                    <div id="statusEdit"></div>
                     </div>
                 </div>
             </div>
-            <div class="row" id="rangeDate"></div>
+            <div class="row" id="detailRangeDate"></div>
         </div>
         <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-            <button type="submit" class="btn btn-primary" id="submit1">Simpan</button>
+            <button type="submit" class="btn btn-primary" id="submit">Simpan</button>
         </div>
             </form>
         </div>
@@ -302,7 +289,6 @@
 <!-- /.content -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
-
 $(document).ready(function(){
     $('#submit').on('submit',function(e){
     e.preventDefault(); 
@@ -315,8 +301,8 @@ $(document).ready(function(){
                 cache:false,
                 async:false,
                 success: function (cek) {
-                   if (cek == 0){
-                       swal("Sorry", "Gagal Upload", "warning");
+                if (cek == 0){
+                    swal("Sorry", "Gagal Upload", "warning");
                     }else{
                     swal({
                         title: "Yeah",
@@ -330,8 +316,7 @@ $(document).ready(function(){
                             window.location.reload();
                         }
                     });
-
-                   }
+                }
         }
     });
 });
@@ -345,20 +330,81 @@ function detailKaryawan(nik) {
         success: function (data) {
             var json = data,
                     obj = JSON.parse(json);
-            $("#kodebrgEdit").val(obj.kodebrg);       
-            $("#namabrgEdit").val(obj.namabrg);
-            // $("#satuanEdit").val(obj.satuan);
-            $("#hargaEdit").val(obj.harga);
-        }
-    });
+            $("#detailNik").val(obj.nik);
+            $("#detailNamaLengkap").val(obj.namaLengkap);
+            $("#detailAlamat").val(obj.alamat);
+            $("#detailTempatLahir").val(obj.tempatLahir);
+            $("#detailTanggalLahir").val(obj.tanggalLahir);
+            $("#detailTanggalMasuk").val(obj.tanggalMasuk);
+            $("#detailprev").html(obj.foto);
+
+            if(obj.statusKaryawan == "magang"){
+                $('#detailRangeDate').show();
+                status = '<div class="col-sm-6">';
+                status +=   '<div class="form-group">';
+                status +=       '<label>Mulai Tanggal :</label>';
+                status +=       '<div class="input-group date" id="detailtglMulai" data-target-input="nearest">';
+                status +=           '<input type="text" id="detailTanggalMulai" name="detailTanggalMulai" class="form-control datetimepicker-input" data-target="#detailtglMulai"/>';
+                status +=           '<div class="input-group-append" data-target="#detailtglMulai" data-toggle="datetimepicker">';
+                status +=               '<div class="input-group-text"><i class="fa fa-calendar"></i></div>';
+                status +=           '</div>';
+                status +=       '</div>';
+                status +=   '</div>';
+                status += '</div>';
+
+                status += '<div class="col-sm-6">';
+                status +=   '<div class="form-group">';
+                status +=       '<label>Habis Tanggal :</label>';
+                status +=           '<div class="input-group date" id="detailtglHabis" data-target-input="nearest">';
+                status +=               '<input type="text" id="detailTanggalHabis" name="detailTanggalHabis" class="form-control datetimepicker-input" data-target="#detailtglHabis"/>';
+                status +=               '<div class="input-group-append" data-target="#detailtglHabis" data-toggle="datetimepicker">';
+                status +=                   '<div class="input-group-text"><i class="fa fa-calendar"></i></div>';
+                status +=               '</div>';
+                status +=           '</div>';
+                status +=   '</div>';
+                status += '</div>';
+            }else{
+                $('#detailRangeDate').hide();
+            }
+            $('#detailRangeDate').html(status);
+            $('#detailtglMulai').datetimepicker({
+                format: 'DD-MM-YYYY'
+            });
+            $('#detailtglHabis').datetimepicker({
+                format: 'DD-MM-YYYY'
+            });
+            $("#detailTanggalMulai").val(obj.mulaiTanggal);
+            $("#detailTanggalHabis").val(obj.habisTanggal);
+    }
+    }),
 
     $.ajax({
         type: 'GET',
-        url: '<?php echo base_url() ?>Barang/cmbsatuan',
-        data: '&kodebrg=' + kodebrg,
+        url: '<?php echo base_url() ?>Karyawan/cmbJenisKelamin',
+        data: '&nik=' + nik,
         dataType : 'html',
         success: function (data) {
-                $('#satuanDiv').html(data);
+            $('#jenisKelaminEdit').html(data);
+        }
+    }),
+
+    $.ajax({
+        type: 'GET',
+        url: '<?php echo base_url() ?>Karyawan/cmbDepartement',
+        data: '&nik=' + nik,
+        dataType : 'html',
+        success: function (data) {
+            $('#departementEdit').html(data);
+        }
+    }),
+
+    $.ajax({
+        type: 'GET',
+        url: '<?php echo base_url() ?>Karyawan/cmbStatus',
+        data: '&nik=' + nik,
+        dataType : 'html',
+        success: function (data) {
+            $('#statusEdit').html(data);
         }
     });
 }
@@ -371,6 +417,15 @@ if (input.files && input.files[0]) {
     }
     reader.readAsDataURL(input.files[0]);
 }
-} 
+}
+function readURLedit(input) {
+if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+    $('#detailprev_foto').attr('src', e.target.result);
+    }
+    reader.readAsDataURL(input.files[0]);
+}
+}
 
 </script>

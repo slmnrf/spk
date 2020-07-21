@@ -6,10 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
     <link rel="icon" type="image/png" href="#">
-    <title>SPK</title>
+    <link rel="icon" type="image/png" href="./assets/gambar/logo.png">
+    <title>PT. LOKATEX</title>
     <!-- Icons-->
     <link href="<?php echo base_url()?>assets/login/style.css" rel="stylesheet">
     <link href="<?php echo base_url()?>assets/login/pace.min.css" rel="stylesheet">
+    <style>
+      .gradient {
+        background: linear-gradient(#1cb5e0,#FFFFFF);   
+      }
+    </style>
   </head>
   <body class="app flex-row align-items-center">
     <div class="container">
@@ -52,12 +58,12 @@
                 <?php echo form_close();  ?>
               </div>
             </div>
-            <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+            <div class="card text-white gradient py-5 d-md-down-none" style="width:44%">
               <div class="card-body text-center">
                 <div>
                   <h2>Selamat Datang</h2>
                   <p>Di Aplikasi Pendukung Keputusan</p>
-                  <!-- <img src="#" width="80px" height="80px"> -->
+                  <img src="./assets/gambar/logo.png" width="100px" >
                 </div>
               </div>
             </div>

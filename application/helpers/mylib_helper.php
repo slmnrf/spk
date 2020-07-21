@@ -7,6 +7,4 @@ function chek_seesion(){
         redirect(base_url());
     }
 }
-
-
 ?>
