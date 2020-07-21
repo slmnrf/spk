@@ -112,5 +112,11 @@ function editAkun($table,$where,$data){
     $this->db->where($where);
     return $this->db->update($table,$data);
 }
+
+function hapus($table,$where){
+    $this->db->where($where);
+    $this->db->delete($table);
+    return;
+}
 }
 ?>

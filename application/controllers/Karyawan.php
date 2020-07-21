@@ -37,7 +37,7 @@ class Karyawan extends CI_Controller {
             $row[] = $field->tempatLahir;
             $row[] = $field->tanggalLahir;
             $row[] = $field->departement;
-            $row[] = "<td class='text-center'><button class='btn btn-info' onclick=detailKaryawan('$field->nik') data-toggle='modal' data-target='#modal-detail'>Lihat</button>&nbsp;<button onclick=delnokk('$field->nik') class='btn btn-danger'>Hapus</button></td>";
+            $row[] = "<td class='text-center'><button class='btn btn-info' onclick=detailKaryawan('$field->nik') data-toggle='modal' data-target='#modal-detail'>Lihat</button>&nbsp;<button onclick=hapusData('$field->nik') class='btn btn-danger'>Hapus</button></td>";
 
             $data[] = $row;
         }
@@ -105,7 +105,14 @@ class Karyawan extends CI_Controller {
 			$this->modelKaryawan->tambahKaryawan('karyawan', $dataKaryawan);
 			$this->modelKaryawan->tambahStatus('status',$dataStatus);
 		}
-    }
+	}
+	
+	function hapusData(){
+		$nik = $_GET['nik'];
+		$this->modelKaryawan->hapus('karyawan',array('nik' => $nik));
+		$this->modelKaryawan->hapus('status',array('nik' => $nik));
+		redirect('karyawan');
+	}
     
 	function editData(){
 		$nik = $this->input->post('detailNik');
