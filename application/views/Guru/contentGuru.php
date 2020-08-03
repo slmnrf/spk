@@ -8,21 +8,18 @@
         <div class="card">
         <div class="card-header">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
-                <span class="fa fa-user-plus"> Tambah Data Karyawan</span>
+                <span class="fa fa-user-plus"> Tambah Data Guru</span>
             </button>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <table id="tabelKaryawan" class="table table-bordered table-striped">
+            <table id="tabelGuru" class="table table-bordered table-striped">
             <thead>
             <tr>
                 <th>No</th>
-                <th>NIK</th>
+                <th>NIP</th>
                 <th>Nama Lengkap</th>
-                <th>Jenis Kelamin</th>
-                <th>Tempat Lahir</th>
-                <th>Tanggal Lahir</th>
-                <th>Departement</th>
+                <th>Mata Pelajaran</th>
                 <th>Aksi</th>
             </tr>
             </thead>
@@ -43,7 +40,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header bg-primary">
-            <h4 class="modal-title">Input Data Karyawan</h4>
+            <h4 class="modal-title">Input Data Guru</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -54,34 +51,14 @@
                 <div class="col-sm-6">
                     <!-- text input -->
                     <div class="form-group">
-                    <label>NIK :</label>
-                    <input type="text" class="form-control" id="nik" name="nik" value="<?= $autoNik;?>" readonly>
+                    <label>NIP :</label>
+                    <input type="text" class="form-control" id="nip" placeholder="Nomer Induk Pegawai" name="nip">
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                    <img class="profile-user-img img-fluid img-square"
-                        id="prev_foto" src="./assets/photo/default.jpg" width="100" height="100" alt="Preview Image">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                </div>
-                <div class="col-sm-6">
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Nama Lengkap :</label>
                         <input type="text" class="form-control" id="namaLengkap" name="namaLengkap" placeholder="Masukan Nama Lengkap">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                    <label>Memilih Photo :</label>
-                        <input type="file" id="file_gambar" name="file_gambar">
                     </div>
                 </div>
             </div>
@@ -101,7 +78,7 @@
                     <div class="form-group">
                         <label>Tanggal Lahir :</label>
                         <div class="input-group date" id="tglLahir" data-target-input="nearest">
-                            <input type="text" id="tanggalLahir" name="tanggalLahir" class="form-control datepickerku" data-target="#tglLahir"/>
+                            <input type="text" id="tanggalLahir" name="tanggalLahir" class="form-control datepickerku" placeholder="Tanggal Lahir" data-target="#tglLahir"/>
                             <div class="input-group-append" data-target="#tglLahir" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -115,6 +92,7 @@
                     <div class="form-group">
                     <label>Jenis Kelamin :</label>
                     <select id="jenisKelamin" name="jenisKelamin" class="form-control">
+                        <option selected disabled>Pilih Satu</option>
                         <option value="L">Laki-laki</option>
                         <option value="p">Perempuan</option>
                     </select>
@@ -122,38 +100,18 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                    <label>Departement :</label>
-                    <select class="form-control" id="comboDepartement" name="comboDepartement">
-                        <option value="spinning">Spinning</option>
-                        <option value="weaving">Weaving</option>
-                        <option value="finishing">Finishing</option>
+                    <label>Mata Pelajaran :</label>
+                    <select class="form-control" id="comboMapel" name="comboMapel">
+                        <option selected disabled>Pilih Satu</option>   
+                        <option value="mtk">MATEMATIKA</option>
+                        <option value="bindo">BAHASA INDONESIA</option>
+                        <option value="binggris">BAHASA INGGRIS</option>
+                        <option value="ipa">IPA</option>
+                        <option value="ips">IPS</option>
                     </select>
                     </div>
                     <!-- tempat block -->
                     <!-- <span id="blockBagian"></span> -->
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>Tanggal Masuk :</label>
-                        <div class="input-group date" id="tglMasuk"  data-target-input="nearest">
-                            <input type="text" id="tanggalMasuk" name="tanggalMasuk" class="form-control datepickerku" data-target="#tglMasuk"/>
-                            <div class="input-group-append" data-target="#tglMasuk" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                    <label>Status Karyawan :</label>
-                    <select class="form-control" id="comboStatus" name="comboStatus">
-                        <option value="tetap">Tetap</option>
-                        <option value="magang">Magang</option>
-                    </select>
-                    </div>
                 </div>
             </div>
             <div class="row" id="rangeDate"></div>
@@ -173,7 +131,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header bg-info">
-            <h4 class="modal-title">Detail Data Karyawan</h4>
+            <h4 class="modal-title">Detail Data Guru</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -184,33 +142,14 @@
                 <div class="col-sm-6">
                     <!-- text input -->
                     <div class="form-group">
-                    <label>NIK :</label>
-                    <input type="text" class="form-control" id="detailNik" name="detailNik" readonly>
+                    <label>NIP :</label>
+                    <input type="text" class="form-control" id="detailNip" name="detailNip" readonly>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                    <div id="detailprev"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                </div>
-                <div class="col-sm-6">
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Nama Lengkap :</label>
                         <input type="text" class="form-control" id="detailNamaLengkap" name="detailNamaLengkap" placeholder="Masukan Nama Lengkap">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                    <label>Memilih Photo :</label>
-                        <input type="file" id="detailFile_gambar" name="detailFile_gambar">
                     </div>
                 </div>
             </div>
@@ -248,28 +187,8 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                    <label>Departement :</label>
-                    <div id="departementEdit"></div>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>Tanggal Masuk :</label>
-                        <div class="input-group date" id="detailtglMasuk"  data-target-input="nearest">
-                            <input type="text" id="detailTanggalMasuk" name="detailTanggalMasuk" class="form-control datepickerku" data-target="#detailtglMasuk"/>
-                            <div class="input-group-append" data-target="#detailtglMasuk" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                    <label>Status Karyawan :</label>
-                    <div id="statusEdit"></div>
+                    <label>Mata Pelajaran :</label>
+                    <div id="mapelEdit"></div>
                     </div>
                 </div>
             </div>
@@ -293,7 +212,7 @@ $(document).ready(function(){
     $('#submit').on('submit',function(e){
     e.preventDefault(); 
             $.ajax({
-                url:'<?php echo base_url();?>Karyawan/tambah',
+                url:'<?php echo base_url();?>Guru/tambah',
                 type:"POST", //method Submit
                 data:new FormData(this), //penggunaan FormData
                 processData:false,
@@ -301,9 +220,6 @@ $(document).ready(function(){
                 cache:false,
                 async:false,
                 success: function (cek) {
-                if (cek == 0){
-                    swal("Sorry", "Gagal Upload", "warning");
-                    }else{
                     swal({
                         title: "Yeah",
                         text: "Tambah Data Sukses !",
@@ -317,71 +233,30 @@ $(document).ready(function(){
                         }
                     });
                 }
-        }
-    });
-});
-});
+            });
+        });
+        });
 
-function detailKaryawan(nik) {
+function detailGuru(nip) {
     $.ajax({
         type: 'GET',
-        url: '<?php echo base_url() ?>Karyawan/detailKaryawan',
-        data: '&nik=' + nik,
+        url: '<?php echo base_url() ?>Guru/detailGuru',
+        data: '&nip=' + nip,
         success: function (data) {
             var json = data,
                     obj = JSON.parse(json);
-            $("#detailNik").val(obj.nik);
+            $("#detailNip").val(obj.nip);
             $("#detailNamaLengkap").val(obj.namaLengkap);
             $("#detailAlamat").val(obj.alamat);
             $("#detailTempatLahir").val(obj.tempatLahir);
             $("#detailTanggalLahir").val(obj.tanggalLahir);
-            $("#detailTanggalMasuk").val(obj.tanggalMasuk);
-            $("#detailprev").html(obj.foto);
-
-            if(obj.statusKaryawan == "magang"){
-                $('#detailRangeDate').show();
-                status = '<div class="col-sm-6">';
-                status +=   '<div class="form-group">';
-                status +=       '<label>Mulai Tanggal :</label>';
-                status +=       '<div class="input-group date" id="detailtglMulai" data-target-input="nearest">';
-                status +=           '<input type="text" id="detailTanggalMulai" name="detailTanggalMulai" class="form-control datetimepicker-input" data-target="#detailtglMulai"/>';
-                status +=           '<div class="input-group-append" data-target="#detailtglMulai" data-toggle="datetimepicker">';
-                status +=               '<div class="input-group-text"><i class="fa fa-calendar"></i></div>';
-                status +=           '</div>';
-                status +=       '</div>';
-                status +=   '</div>';
-                status += '</div>';
-
-                status += '<div class="col-sm-6">';
-                status +=   '<div class="form-group">';
-                status +=       '<label>Habis Tanggal :</label>';
-                status +=           '<div class="input-group date" id="detailtglHabis" data-target-input="nearest">';
-                status +=               '<input type="text" id="detailTanggalHabis" name="detailTanggalHabis" class="form-control datetimepicker-input" data-target="#detailtglHabis"/>';
-                status +=               '<div class="input-group-append" data-target="#detailtglHabis" data-toggle="datetimepicker">';
-                status +=                   '<div class="input-group-text"><i class="fa fa-calendar"></i></div>';
-                status +=               '</div>';
-                status +=           '</div>';
-                status +=   '</div>';
-                status += '</div>';
-            }else{
-                $('#detailRangeDate').hide();
-            }
-            $('#detailRangeDate').html(status);
-            $('#detailtglMulai').datetimepicker({
-                format: 'DD-MM-YYYY'
-            });
-            $('#detailtglHabis').datetimepicker({
-                format: 'DD-MM-YYYY'
-            });
-            $("#detailTanggalMulai").val(obj.mulaiTanggal);
-            $("#detailTanggalHabis").val(obj.habisTanggal);
     }
     }),
 
     $.ajax({
         type: 'GET',
-        url: '<?php echo base_url() ?>Karyawan/cmbJenisKelamin',
-        data: '&nik=' + nik,
+        url: '<?php echo base_url() ?>Guru/cmbJenisKelamin',
+        data: '&nip=' + nip,
         dataType : 'html',
         success: function (data) {
             $('#jenisKelaminEdit').html(data);
@@ -390,49 +265,20 @@ function detailKaryawan(nik) {
 
     $.ajax({
         type: 'GET',
-        url: '<?php echo base_url() ?>Karyawan/cmbDepartement',
-        data: '&nik=' + nik,
+        url: '<?php echo base_url() ?>Guru/cmbMapel',
+        data: '&nip=' + nip,
         dataType : 'html',
         success: function (data) {
-            $('#departementEdit').html(data);
+            $('#mapelEdit').html(data);
         }
-    }),
-
-    $.ajax({
-        type: 'GET',
-        url: '<?php echo base_url() ?>Karyawan/cmbStatus',
-        data: '&nik=' + nik,
-        dataType : 'html',
-        success: function (data) {
-            $('#statusEdit').html(data);
-        }
-    });
-}
-
-function readURL(input) {
-if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-    $('#prev_foto').attr('src', e.target.result);
-    }
-    reader.readAsDataURL(input.files[0]);
-}
-}
-function readURLedit(input) {
-if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-    $('#detailprev_foto').attr('src', e.target.result);
-    }
-    reader.readAsDataURL(input.files[0]);
-}
+    })
 }
 
 $(document).ready(function(){
     $('#submitEdit').on('submit',function(e){
     e.preventDefault(); 
     $.ajax({
-            url:'<?php echo base_url();?>Karyawan/editData',
+            url:'<?php echo base_url();?>Guru/editData',
             type:"POST", //method Submit
             data:new FormData(this), //penggunaan FormData
             processData:false,
@@ -440,9 +286,6 @@ $(document).ready(function(){
             cache:false,
             async:false,
             success: function (cek) {
-            if (cek == 0){
-                swal("Sorry", "Gagal Upload", "warning");
-                }else{
                 swal({
                     title: "Yeah",
                     text: "Tambah Data Sukses !",
@@ -456,12 +299,11 @@ $(document).ready(function(){
                     }
                 });
             }
-            }
         }); 
 });
 });
 
-function hapusData(nik){
+function hapusData(nip){
         swal({
             title: "Oppss",
             text: "Yakin Ingin Menghapus?",
@@ -476,8 +318,8 @@ function hapusData(nik){
             if(isConfirm){
                 $.ajax({
                 type: 'GET',
-                url: '<?php echo base_url() ?>karyawan/hapusData',
-                data: '&nik=' + nik,
+                url: '<?php echo base_url() ?>guru/hapusData',
+                data: '&nip=' + nip,
                 success: function (data) {
                         swal({
                         title: "Yeah",

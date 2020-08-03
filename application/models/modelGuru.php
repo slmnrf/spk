@@ -1,10 +1,10 @@
 <?php
 
-Class modelKaryawan extends CI_Model {
-  var $table = 'karyawan'; //nama tabel dari database
-  var $column_order = array(null, 'nik','namaLengkap','jenisKelamin','tempatLahir','tanggalLahir','departement',null); //field yang ada di table
-  var $column_search = array('nik','namaLengkap','jenisKelamin','tempatLahir','tanggalLahir','departement'); //field yang diizin untuk pencarian 
-  var $order = array('nik' => 'asc'); // default order 
+Class modelGuru extends CI_Model {
+  var $table = 'guru'; //nama tabel dari database
+  var $column_order = array(null, 'nip','namaLengkap','mapel',null); //field yang ada di table
+  var $column_search = array('nip','namaLengkap','mapel'); //field yang diizin untuk pencarian 
+  var $order = array('nip' => 'asc'); // default order 
 
     public function __construct()
     {
@@ -73,13 +73,10 @@ Class modelKaryawan extends CI_Model {
         return $this->db->count_all_results();
     }
 
-        function tambahKaryawan($table,$dataKaryawan){
-            return $this->db->insert($table,$dataKaryawan);
-        }
-        function tambahStatus($table,$dataStatus){
-            return $this->db->insert($table,$dataStatus);
+    function tambahGuru($table,$data){
+        return $this->db->insert($table,$data);
     }
-    
+
     function autoNik(){
         $q = $this->db->query("SELECT MAX(LEFT(nik,1)) AS nik_max FROM karyawan");
         $kd = "";
@@ -95,20 +92,19 @@ Class modelKaryawan extends CI_Model {
         return $kd."-".date('y');
     }
 
-function detaiLKaryawan($nik){
-    $sql = "select a.nik, a.namaLengkap, a.jenisKelamin, a.tempatLahir, a.tanggalLahir, a.alamat, a.departement, a.foto,
-        b.tanggalMasuk, b.statusKaryawan, b.mulaiTanggal, b.habisTanggal from karyawan as a, status as b where a.nik=b.nik and a.nik='$nik' ";
+function detaiLGuru($nip){
+    $sql = "SELECT * FROM guru WHERE nip='$nip'";
     $detail = $this->db->query($sql)->row_Array();
     return $detail;
 }
 
-function cmbKaryawan($nik){
-    $sql = "select a.jenisKelamin, a.departement, b.statusKaryawan FROM karyawan as a, status as b WHERE a.nik=b.nik and a.nik='$nik'";
+function cmbGuru($nip){
+    $sql = "SELECT jenisKelamin, mapel FROM guru WHERE nip='$nip'";
     $data = $this->db->query($sql)->result();
     return $data;
 }
 
-function editAkun($table,$where,$data){
+function editData($table,$where,$data){
     $this->db->where($where);
     return $this->db->update($table,$data);
 }

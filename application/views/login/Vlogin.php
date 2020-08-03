@@ -7,7 +7,7 @@
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
     <link rel="icon" type="image/png" href="#">
     <link rel="icon" type="image/png" href="./assets/gambar/logo.png">
-    <title>PT. LOKATEX</title>
+    <title>SMK BINA UMAT SIWALAN</title>
     <!-- Icons-->
     <link href="<?php echo base_url()?>assets/login/style.css" rel="stylesheet">
     <link href="<?php echo base_url()?>assets/login/pace.min.css" rel="stylesheet">
@@ -58,12 +58,12 @@
                 <?php echo form_close();  ?>
               </div>
             </div>
-            <div class="card text-white gradient py-5 d-md-down-none" style="width:44%">
+            <div class="card text-white bg-blue py-5 d-md-down-none" style="width:44%">
               <div class="card-body text-center">
                 <div>
-                  <h2>Selamat Datang</h2>
-                  <p>Di Aplikasi Pendukung Keputusan</p>
-                  <img src="./assets/gambar/logo.png" width="100px" >
+                  <h3>SISTEM PENDUKUNG KEPUTUSAN</h3>
+                  <p>PEMILIHAN GURU TELADAN DI SMK BINA UMAT SIWALAN DENGAN METODE SIMPLE ADDITIVE WEIGHTING (SAW)</p>
+                  <!-- <img src="./assets/gambar/logo.png" width="100px" > -->
                 </div>
               </div>
             </div>

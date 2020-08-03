@@ -11,11 +11,9 @@ class Dashboard extends CI_Controller {
 
 	public function index()
 	{
-		$data['karyawan'] = $this->modelDashboard->getData('nik','jnik','karyawan');
-		$data['laki'] = $this->modelDashboard->getDataWhere('jenisKelamin','laki','karyawan','jenisKelamin','L');
-		$data['perempuan'] = $this->modelDashboard->getDataWhere('jenisKelamin','perempuan','karyawan','jenisKelamin','P');
-		$data['magang'] = $this->modelDashboard->getDataWhere('statusKaryawan','magang','status','statusKaryawan','magang');
-		$data['tetap'] = $this->modelDashboard->getDataWhere('statusKaryawan','tetap','status','statusKaryawan','tetap');
+		$data['guru'] = $this->modelDashboard->getData('nip','jnip','guru');
+		$data['laki'] = $this->modelDashboard->getDataWhere('jenisKelamin','laki','guru','jenisKelamin','L');
+		$data['perempuan'] = $this->modelDashboard->getDataWhere('jenisKelamin','perempuan','guru','jenisKelamin','P');
 		$this->template->load('template','dashboard/contentDashboard',$data);
 	}
 }

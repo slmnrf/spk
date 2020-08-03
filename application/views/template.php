@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="./assets/gambar/logo.png">
-    <title>PT. LOKATEX</title>
+    <link rel="icon" type="image/png" href="<?= base_url()?>/assets/gambar/logo.png">
+    <title>SMK BINA UMAT SIWALAN</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -46,95 +46,6 @@
             </div>
         </div>
         </form>
-
-        <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
-        <!-- Messages Dropdown Menu -->
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-comments"></i>
-            <span class="badge badge-danger navbar-badge">3</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <a href="#" class="dropdown-item">
-                <!-- Message Start -->
-                <div class="media">
-                <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                <div class="media-body">
-                    <h3 class="dropdown-item-title">
-                    Brad Diesel
-                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                    </h3>
-                    <p class="text-sm">Call me whenever you can...</p>
-                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-                </div>
-                <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <!-- Message Start -->
-                <div class="media">
-                <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                    <h3 class="dropdown-item-title">
-                    John Pierce
-                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                    </h3>
-                    <p class="text-sm">I got your message bro</p>
-                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-                </div>
-                <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <!-- Message Start -->
-                <div class="media">
-                <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                    <h3 class="dropdown-item-title">
-                    Nora Silvester
-                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                    </h3>
-                    <p class="text-sm">The subject goes here</p>
-                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-                </div>
-                <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-            </div>
-        </li>
-        <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge">15</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">15 Notifications</span>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <i class="fas fa-envelope mr-2"></i> 4 new messages
-                <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <i class="fas fa-users mr-2"></i> 8 friend requests
-                <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <i class="fas fa-file mr-2"></i> 3 new reports
-                <span class="float-right text-muted text-sm">2 days</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-            </div>
-        </li>
-        </ul>
     </nav>
     <!-- /.navbar -->
 
@@ -142,7 +53,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
-        <img src="./assets/gambar/logo_dashboard.png" alt="Logo" style="opacity: .8">
+        <img src="<?= base_url()?>/assets/gambar/logo_dashboard.png" alt="Logo" style="opacity: .8">
         <!-- <span class="brand-text font-weight-light">Sistem Perpanjangan Kontrak Kerja PT. LOKATEX</span> -->
         </a>
 
@@ -164,15 +75,17 @@
                 </a>
             </li>
             <li class="nav-item has-treeview">
-                <a href="<?= base_url('karyawan');?>" class="nav-link <?php if($this->uri->segment('1') == 'karyawan'){ echo "active";}?>">
+                <a href="<?= base_url('guru');?>" class="nav-link <?php if($this->uri->segment('1') == 'guru'){ echo "active";}?>">
                 <i class="nav-icon fas fa-male"></i>
                 <p>
-                    Data Karyawan
+                    Data Guru
                 </p>
                 </a>
             </li>
-            <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
+            <li class="nav-item has-treeview <?php if($this->uri->segment('2') == 'inputpenilaian'){ echo "menu-open";}
+                                                    if($this->uri->segment('2') == 'kriteria'){ echo "menu-open";}?>">
+                <a href="#" class="nav-link <?php if($this->uri->segment('2') == 'inputpenilaian'){ echo "menu-open";}
+                                                    if($this->uri->segment('2') == 'kriteria'){ echo "menu-open";}?>">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
                     Analisa
@@ -181,15 +94,15 @@
                 </a>
                 <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="pages/charts/chartjs.html" class="nav-link">
+                    <a href="<?= base_url('analisa/inputpenilaian')?>" class="nav-link <?php if($this->uri->segment('2') == 'datakaryawan'){ echo "active";}?>">
                     <i class="nav-icon fas fa-calculator"></i>
                     <p>Input Penilaian</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/charts/flot.html" class="nav-link">
+                    <a href="<?= base_url('analisa/kriteria')?>" class="nav-link <?php if($this->uri->segment('2') == 'kriteria'){ echo "active";}?>">
                     <i class="nav-icon fas fa-database"></i>
-                    <p>Lihat Data</p>
+                    <p>Input Kriteria</p>
                     </a>
                 </li>
                 </ul>
@@ -226,9 +139,11 @@
             <div class="row mb-2">
             <div class="col-sm-9">
                 <h1 class="m-0 text-dark"><?php if($this->uri->segment('1') == 'dashboard'){ echo "Dashboard";}
-                elseif($this->uri->segment('1') == 'karyawan'){ echo "Data Karyawan";}?></h1>
+                elseif($this->uri->segment('1') == 'karyawan'){ echo "Data Karyawan";}
+                elseif($this->uri->segment('2') == 'datakaryawan'){ echo "Data Karyawan Magang";}?></h1>
             </div><!-- /.col -->
-            <div class="col-sm-3">
+            <?php if($this->uri->segment('1') == 'dashboard'){ ?>
+            <div class="col-sm-3 ">
                 <div class="info-box">
                 <span class="info-box-icon bg-info"><i class="far fa-user-circle"></i></span>
 
@@ -237,9 +152,11 @@
                 </div>
                 </div>
             </div><!-- /.col -->
+            <?php } ?>
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
         </div>
+
         <!-- /.content-header -->
 
         <!-- Main content -->
@@ -248,7 +165,7 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <img src="./assets/gambar/logo.png" width="22px">
+        <img src="<?= base_url()?>/assets/gambar/logo.png" width="22px">
         <strong>Sistem Perpanjangan Kontrak PT. LOKATEX.</strong>
     </footer>
     </div>
@@ -312,49 +229,6 @@
         });   
     });
 
-$('#comboStatus').on('change', function(e){
-    $.ajax( {
-        success: function(html) {
-            var statusKaryawan = $("#comboStatus option:selected").attr("value");
-            $('#rangeDate').show();
-            if(statusKaryawan == "magang"){
-                status = '<div class="col-sm-6">';
-                status +=   '<div class="form-group">';
-                status +=       '<label>Mulai Tanggal :</label>';
-                status +=       '<div class="input-group date" id="tglMulai" data-target-input="nearest">';
-                status +=           '<input type="text" id="tanggalMulai" name="tanggalMulai" class="form-control datetimepicker-input" data-target="#tglMulai"/>';
-                status +=           '<div class="input-group-append" data-target="#tglMulai" data-toggle="datetimepicker">';
-                status +=               '<div class="input-group-text"><i class="fa fa-calendar"></i></div>';
-                status +=           '</div>';
-                status +=       '</div>';
-                status +=   '</div>';
-                status += '</div>';
-
-                status += '<div class="col-sm-6">';
-                status +=   '<div class="form-group">';
-                status +=       '<label>Habis Tanggal :</label>';
-                status +=           '<div class="input-group date" id="tglHabis" data-target-input="nearest">';
-                status +=               '<input type="text" id="tanggalHabis" name="tanggalHabis" class="form-control datetimepicker-input" data-target="#tglHabis"/>';
-                status +=               '<div class="input-group-append" data-target="#tglHabis" data-toggle="datetimepicker">';
-                status +=                   '<div class="input-group-text"><i class="fa fa-calendar"></i></div>';
-                status +=               '</div>';
-                status +=           '</div>';
-                status +=   '</div>';
-                status += '</div>';
-            }else{
-                $('#rangeDate').hide();
-            }
-            $('#rangeDate').html(status);
-            $('#tglHabis').datetimepicker({
-                format: 'DD-MM-YYYY'
-            });
-            $('#tglMulai').datetimepicker({
-                format: 'DD-MM-YYYY'
-            });
-        }
-    });
-});
-
 </script>
 <script>
     $(function () {
@@ -363,30 +237,8 @@ $('#comboStatus').on('change', function(e){
         "autoWidth": false,
         });
     });
-
-    $('#tglMasuk').datetimepicker({
-        format: 'DD-MM-YYYY'
-    });
     $('#tglLahir').datetimepicker({
         format: 'DD-MM-YYYY'
-    });
-    $('#detailtglMasuk').datetimepicker({
-        format: 'DD-MM-YYYY'
-    });
-    $('#detailtglLahir').datetimepicker({
-        format: 'DD-MM-YYYY'
-    });
-
-    $(document).ready(function(){
-        $('#file_gambar').change(function(){
-            readURL(this);
-        });
-    });
-
-    $(document).ready(function(){
-        $('#detailFile_gambar').change(function(){
-            readURLedit(this);
-        });
     });
 </script>
 <script type="text/javascript">
@@ -394,17 +246,42 @@ $('#comboStatus').on('change', function(e){
     $(document).ready(function() {
 
         //datatables
-        table = $('#tabelKaryawan').DataTable({ 
+        table = $('#tabelGuru').DataTable({ 
 
             "processing": true, 
             "serverSide": true, 
             "order": [], 
             
             "ajax": {
-                "url": "<?php echo site_url('Karyawan/get_data_karyawan')?>",
+                "url": "<?php echo site_url('Guru/get_data_guru')?>",
                 "type": "POST"
             },
 
+            
+            "columnDefs": [
+            { 
+                "targets": [ 0 ], 
+                "orderable": false, 
+            },
+            ],
+
+        });
+
+    });
+
+    var tableku;
+    $(document).ready(function() {
+        //datatables
+        tableku = $('#tableMagang').DataTable({ 
+
+            "processing": true, 
+            "serverSide": true, 
+            "order": [], 
+            
+            "ajax": {
+                "url": "<?php echo site_url('Analisa/getDataKaryawanMagang')?>",
+                "type": "POST"
+            },
             
             "columnDefs": [
             { 
