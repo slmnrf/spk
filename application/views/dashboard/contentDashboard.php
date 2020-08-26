@@ -12,7 +12,7 @@
                     <p>Jumlah Guru</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-bag"></i>
+                    <i class="ion ion-pie-graph"></i>
                 </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <p>Jumlah Guru Laki-Laki</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
+                    <i class="ion ion-male"></i>
                 </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <p>Jumlah Guru Perempuan</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
+                    <i class="ion ion-female"></i>
                 </div>
                 </div>
             </div>

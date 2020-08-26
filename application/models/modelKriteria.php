@@ -9,10 +9,10 @@ Class modelKriteria extends CI_Model {
     public $subKriteria;
     public $value;
 
-    var $table = 'guru'; //nama tabel dari database
-    var $column_order = array(null, 'nip','namaLengkap','mapel',null); //field yang ada di table
-    var $column_search = array('nip','namaLengkap','mapel'); //field yang diizin untuk pencarian 
-    var $order = array('nip' => 'asc'); // default order 
+    var $table = 'kriteria'; //nama tabel dari database
+    var $column_order = array(null, 'kdKriteria','namaKriteria','sifat','bobot',null); //field yang ada di table
+    var $column_search = array('kdKriteria','namaKriteria','sifat','bobot'); //field yang diizin untuk pencarian 
+    var $order = array('kdKriteria' => 'asc'); // default order 
 
     public function __construct()
     {
@@ -113,7 +113,7 @@ Class modelKriteria extends CI_Model {
         $data = array(
             'kdKriteria' => $this->kdKriteria,
             'subKriteria' => $this->subKriteria,
-            'nilai' => $this->value
+            // 'nilai' => $this->value
         );
         return $data;
     }
@@ -127,6 +127,38 @@ Class modelKriteria extends CI_Model {
     {
         $this->db->insert($this->getTableSub(), $this->getDataSub());
         return $this->db->insert_id();
+    }
+
+    public function update($where)
+    {
+        $this->db->update($this->getTable(), $this->getData(), $where);
+        return $this->db->affected_rows();
+    }
+
+    public function updatesub()
+    {
+        $data = $this->getDataSub();
+        $this->db->where('kdSubKriteria', $this->kdSubKriteria);
+        $this->db->where('kdKriteria', $this->kdKriteria);
+        $this->db->update($this->getTablesub(), $data);
+        return $this->db->affected_rows();
+    }
+    
+    function detail($kdKriteria){
+        // $this->db->select('*');
+        // $this->db->from('kriteria');
+        // $this->db->join('subKriteria','subKriteria.kdKriteria = kriteria.kdKriteria');     
+        // $this->db->where('kriteria.kdKriteria',$kdKriteria);
+        $query = "select a.kdKriteria, a.namaKriteria, a.sifat, a.bobot, b.kdSubKriteria,b.subKriteria from kriteria as a, subKriteria as b where a.kdKriteria=b.kdKriteria and a.kdKriteria='$kdKriteria'"; 
+        $data = $this->db->query($query)->result_array();
+        return $data;  
+
+    }
+
+    public function delete($id, $table)
+    {
+        $this->db->where('kdKriteria', $id);
+        return $this->db->delete($table);
     }
 
 }

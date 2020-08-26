@@ -51,22 +51,15 @@ class Auth extends CI_Controller {
                     <th style="width: 10px">#</th>
                     <th>Nama Lengkap</th>
                     <th>Username</th>
-                    <th>Hak Akses</th>
                     <th>Aksi</th>
                 </tr>
                 </thead>
                 <tbody>';
                 foreach($dataakun as $row){
-                if($row->hakAkses == '1'){
-                    $akses = "HRD";
-                }else{
-                    $akses = "SDM Produksi";
-                }
                 $html['tabel'] .='<tr> 
                     <td>'.$no++.'</td>
                     <td>'.$row->namaLengkap.'</td>
                     <td>'.$row->userName.'</td>
-                    <td>'.$akses.'</td>
                     <td><a href="#" onclick="javascipt: hapus('.$row->no.')"><i class="fa fa-eraser"></i></a></td>
                     </tr>';
                 }
@@ -85,7 +78,6 @@ class Auth extends CI_Controller {
             'namaLengkap' => $namaLengkap,
             'userName'      => $username,
             'password'     => md5($password),
-            'hakAkses' => $inputAkses
         );
         $this->modelLogin->simpan('login', $data);
         
@@ -98,22 +90,15 @@ class Auth extends CI_Controller {
                     <th style="width: 10px">#</th>
                     <th>Nama Lengkap</th>
                     <th>Username</th>
-                    <th>Hak Akses</th>
                     <th>Aksi</th>
                 </tr>
                 </thead>
                 <tbody>';
                 foreach($dataakun as $row){
-                if($row->hakAkses == '1'){
-                    $akses = "HRD";
-                }else{
-                    $akses = "SDM Produksi";
-                }
                 $html .='<tr> 
                     <td>'.$no++.'</td>
                     <td>'.$row->namaLengkap.'</td>
                     <td>'.$row->userName.'</td>
-                    <td>'.$akses.'</td>
                     <td><a href="#" onclick="javascipt: hapus('.$row->no.')"><i class="fa fa-eraser"></i></a></td>
                     </tr>';
                 }

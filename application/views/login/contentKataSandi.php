@@ -27,14 +27,14 @@
                 <input type="password" id="password" name="password" class="form-control">
               </div>
               
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="inputAkses">Hak Akses</label>
                 <select id="inputAkses" class="form-control custom-select">
                   <option selected disabled>Pilih Satu</option>
                   <option value="1">HRD</option>
                   <option value="2">SDM Produksi</option>
                 </select>
-              </div>
+              </div> -->
             </div>
             <!-- /.card-body -->
           </div>

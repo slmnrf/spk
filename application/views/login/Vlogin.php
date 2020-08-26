@@ -12,8 +12,8 @@
     <link href="<?php echo base_url()?>assets/login/style.css" rel="stylesheet">
     <link href="<?php echo base_url()?>assets/login/pace.min.css" rel="stylesheet">
     <style>
-      .gradient {
-        background: linear-gradient(#1cb5e0,#FFFFFF);   
+      .green {
+        background: rgb(27, 128, 1);   
       }
     </style>
   </head>
@@ -52,13 +52,13 @@
                 </div>
                 <div class="row">
                   <div class="col-6">
-                      <button type="submit" name="submit" class="btn btn-primary px-4">Login</button>
+                      <button type="submit" name="submit" class="btn text-white green px-4">Login</button>
                   </div>
                 </div>
                 <?php echo form_close();  ?>
               </div>
             </div>
-            <div class="card text-white bg-blue py-5 d-md-down-none" style="width:44%">
+            <div class="card text-white green py-5 d-md-down-none" style="width:44%">
               <div class="card-body text-center">
                 <div>
                   <h3>SISTEM PENDUKUNG KEPUTUSAN</h3>

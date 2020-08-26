@@ -166,7 +166,7 @@
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <img src="<?= base_url()?>/assets/gambar/logo.png" width="22px">
-        <strong>Sistem Perpanjangan Kontrak PT. LOKATEX.</strong>
+        <strong>SMK BINA UMAT SIWALAN</strong>
     </footer>
     </div>
 <!-- ./wrapper -->
@@ -240,6 +240,9 @@
     $('#tglLahir').datetimepicker({
         format: 'DD-MM-YYYY'
     });
+    $('#detailtglLahir').datetimepicker({
+        format: 'DD-MM-YYYY'
+    });
 </script>
 <script type="text/javascript">
     var table;
@@ -272,14 +275,14 @@
     var tableku;
     $(document).ready(function() {
         //datatables
-        tableku = $('#tableMagang').DataTable({ 
+        tableku = $('#tabelKriteria').DataTable({ 
 
             "processing": true, 
             "serverSide": true, 
             "order": [], 
             
             "ajax": {
-                "url": "<?php echo site_url('Analisa/getDataKaryawanMagang')?>",
+                "url": "<?php echo site_url('Kriteria/get_data_kriteria')?>",
                 "type": "POST"
             },
             

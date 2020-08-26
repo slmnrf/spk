@@ -15,6 +15,38 @@ class Kriteria extends CI_Controller {
 		$this->template->load('template','kriteria/contentKriteria');
 	}
 
+	function get_data_kriteria(){
+		$list = $this->modelKriteria->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        $sifat = "";
+        foreach ($list as $field) {
+			if($field->sifat == "b"){
+				$sifat = "Benefit";
+			}else{
+				$sifat = "Cost";
+			}
+            $no++;
+            $row = array();
+            $row[] = $no.".";
+            $row[] = $field->namaKriteria;
+            $row[] = $sifat;
+            $row[] = $field->bobot;
+			$row[] = "<td class='text-center'><button class='btn btn-info' onclick=detailKriteria('$field->kdKriteria') data-toggle='modal' data-target='#modal-lihatData'>Lihat Kriteria</button>&nbsp;<button class='btn btn-warning text-white' onclick=detailItemKriteria('$field->kdKriteria') data-toggle='modal' data-target='#modal-editKriteria'>Edit Kriteria</button>
+			&nbsp;<button onclick=detailItemSubKriteria('$field->kdKriteria') class='btn btn-success' data-toggle='modal' data-target='#modal-editSubKriteria'>Edit Item Kriteria</button>&nbsp;<button onclick=hapusData('$field->kdKriteria') class='btn btn-danger'>Hapus</button></td>";
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->modelKriteria->count_all(),
+            "recordsFiltered" => $this->modelKriteria->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+	}
+	
 	function tambah(){
 		$this->modelKriteria->kriteria = $this->input->post('kriteria', true);
 		$this->modelKriteria->sifat = $this->input->post('sifat', true);
@@ -44,5 +76,45 @@ class Kriteria extends CI_Controller {
 				}
 			}
 		}
+	}
+
+	function detailKriteria(){
+		$data = $this->modelKriteria->detail($_GET['kdKriteria']);
+        echo json_encode($data);
+	}
+
+	function update(){
+		$this->modelKriteria->kriteria = $this->input->post('eNamaKriteria', true);
+		$this->modelKriteria->sifat = $this->input->post('eSifat', true);
+		$this->modelKriteria->bobot = $this->input->post('eBobot', true);
+		$where = array('kdKriteria' => $this->input->post('eKriteria', true));
+		$this->modelKriteria->update($where);
+	}
+
+	function updatesubkriteria(){
+		$kdKriteria = $this->input->post('hiddenkdkriteria',true);
+		$subKriteria = array();
+
+		for($i = 0; $i<= 4; $i++){
+
+			$subKriteria[$i] =   array( 'kdSubKriteria' => $this->input->post('kdsub'. $i, true),
+										'subKriteria' => $this->input->post('esItemKriteria'. $i, true),
+										);
+		}
+
+		foreach ($subKriteria as $item) {
+
+			$this->modelKriteria->kdKriteria = $kdKriteria;
+			$this->modelKriteria->kdSubKriteria = $item['kdSubKriteria'];
+			$this->modelKriteria->subKriteria = $item['subKriteria'];
+			$update = $this->modelKriteria->updatesub();
+		}
+	}
+
+	function delete(){
+		$kdKriteria = $_GET['kdKriteria'];
+		$this->modelKriteria->delete($kdKriteria,"kriteria");
+		$this->modelKriteria->delete($kdKriteria,"subKriteria");
+		redirect('kriteria');
 	}
 }
