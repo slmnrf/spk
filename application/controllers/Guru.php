@@ -152,7 +152,7 @@ class Guru extends CI_Controller {
             <option value="binggris" selected>BAHASA INGGRIS</option>
             <option value="ipa">IPA</option>
             <option value="ips">IPS</option>';
-        }elseif ($row->mapel == "binggris") {
+        }elseif ($row->mapel == "ipa") {
             $cmb .='<option value="mtk">MATEMATIKA</option>
             <option value="bindo">BAHASA INDONESIA</option>
             <option value="binggris">BAHASA INGGRIS</option>
