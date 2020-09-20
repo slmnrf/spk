@@ -115,6 +115,6 @@ class Kriteria extends CI_Controller {
 		$kdKriteria = $_GET['kdKriteria'];
 		$this->modelKriteria->delete($kdKriteria,"kriteria");
 		$this->modelKriteria->delete($kdKriteria,"subKriteria");
-		redirect('kriteria');
+		redirect('Kriteria');
 	}
 }

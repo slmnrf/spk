@@ -90,6 +90,39 @@ Class modelKriteria extends CI_Model {
     {
         return 'subkriteria';
     }
+
+    public function getAll()
+    {
+        $query = $this->db->get($this->getTable());
+        if($query->num_rows() > 0){
+            foreach ( $query->result() as $row) {
+                $kriterias[] = $row;
+            }
+            return $kriterias;
+        }
+    }
+
+    public function getById()
+    {
+        $this->db->from($this->getTable());
+        $this->db->where('kdKriteria',$this->kdKriteria);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function getByIdSub()
+    {
+        $this->db->where('kdKriteria', $this->kdKriteria);
+        $query = $this->db->get($this->getTablesub());
+
+        if($query->num_rows() > 0){
+            foreach ($query->result() as $row) {
+                $subkriteria[] = $row;
+            }
+
+            return $subkriteria;
+        }
+    }
     
     public function getLastID(){
         $this->db->select('kdKriteria');
@@ -113,7 +146,7 @@ Class modelKriteria extends CI_Model {
         $data = array(
             'kdKriteria' => $this->kdKriteria,
             'subKriteria' => $this->subKriteria,
-            // 'nilai' => $this->value
+            'nilai' => $this->value
         );
         return $data;
     }
@@ -145,10 +178,6 @@ Class modelKriteria extends CI_Model {
     }
     
     function detail($kdKriteria){
-        // $this->db->select('*');
-        // $this->db->from('kriteria');
-        // $this->db->join('subKriteria','subKriteria.kdKriteria = kriteria.kdKriteria');     
-        // $this->db->where('kriteria.kdKriteria',$kdKriteria);
         $query = "select a.kdKriteria, a.namaKriteria, a.sifat, a.bobot, b.kdSubKriteria,b.subKriteria from kriteria as a, subKriteria as b where a.kdKriteria=b.kdKriteria and a.kdKriteria='$kdKriteria'"; 
         $data = $this->db->query($query)->result_array();
         return $data;  

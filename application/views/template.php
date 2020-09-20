@@ -82,9 +82,9 @@
                 </p>
                 </a>
             </li>
-            <li class="nav-item has-treeview <?php if($this->uri->segment('2') == 'inputpenilaian'){ echo "menu-open";}
+            <li class="nav-item has-treeview <?php if($this->uri->segment('2') == 'penilaian'){ echo "menu-open";}
                                                     if($this->uri->segment('2') == 'kriteria'){ echo "menu-open";}?>">
-                <a href="#" class="nav-link <?php if($this->uri->segment('2') == 'inputpenilaian'){ echo "menu-open";}
+                <a href="#" class="nav-link <?php if($this->uri->segment('2') == 'penilaian'){ echo "menu-open";}
                                                     if($this->uri->segment('2') == 'kriteria'){ echo "menu-open";}?>">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
@@ -94,7 +94,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="<?= base_url('analisa/inputpenilaian')?>" class="nav-link <?php if($this->uri->segment('2') == 'datakaryawan'){ echo "active";}?>">
+                    <a href="<?= base_url('analisa/penilaian')?>" class="nav-link <?php if($this->uri->segment('2') == 'penilaian'){ echo "active";}?>">
                     <i class="nav-icon fas fa-calculator"></i>
                     <p>Input Penilaian</p>
                     </a>
@@ -283,6 +283,31 @@
             
             "ajax": {
                 "url": "<?php echo site_url('Kriteria/get_data_kriteria')?>",
+                "type": "POST"
+            },
+            
+            "columnDefs": [
+            { 
+                "targets": [ 0 ], 
+                "orderable": false, 
+            },
+            ],
+
+        });
+
+    });
+
+    var tablepenilaian;
+    $(document).ready(function() {
+        //datatables
+        tablepenilaian = $('#tablepenilaian').DataTable({ 
+
+            "processing": true, 
+            "serverSide": true, 
+            "order": [], 
+            
+            "ajax": {
+                "url": "<?php echo site_url('analisa/get_data_guru_penilaian')?>",
                 "type": "POST"
             },
             

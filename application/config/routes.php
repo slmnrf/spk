@@ -56,5 +56,6 @@ $route['guru'] = 'guru';
 $route['kelolaakun'] = 'auth/kelolaakun';
 $route['analisa/dataguru'] = 'analisa';
 $route['analisa/kriteria'] = 'kriteria';
+$route['analisa/penilaian'] = 'analisa';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

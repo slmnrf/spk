@@ -1,10 +1,12 @@
 <?php
 
 Class modelGuru extends CI_Model {
-  var $table = 'guru'; //nama tabel dari database
-  var $column_order = array(null, 'nip','namaLengkap','mapel',null); //field yang ada di table
-  var $column_search = array('nip','namaLengkap','mapel'); //field yang diizin untuk pencarian 
-  var $order = array('nip' => 'asc'); // default order 
+    var $nip;
+    var $namaLengkap;
+    var $table = 'guru'; //nama tabel dari database
+    var $column_order = array(null, 'nip','namaLengkap','mapel',null); //field yang ada di table
+    var $column_search = array('nip','namaLengkap','mapel'); //field yang diizin untuk pencarian 
+    var $order = array('nip' => 'asc'); // default order 
 
     public function __construct()
     {
@@ -92,7 +94,7 @@ Class modelGuru extends CI_Model {
         return $kd."-".date('y');
     }
 
-function detaiLGuru($nip){
+function detailGuru($nip){
     $sql = "SELECT * FROM guru WHERE nip='$nip'";
     $detail = $this->db->query($sql)->row_Array();
     return $detail;
@@ -113,6 +115,58 @@ function hapus($table,$where){
     $this->db->where($where);
     $this->db->delete($table);
     return;
+}
+
+private function getTable(){
+    return 'guru';
+}
+
+private function getData(){
+    $data = array(
+        'namaLengkap' => $this->namaLengkap
+    );
+
+    return $data;
+}
+
+public function getAll()
+{
+    $guru = array();
+    $query = $this->db->get($this->getTable());
+    if($query->num_rows() > 0){
+        foreach ($query->result() as $row) {
+            $guru[] = $row;
+        }
+    }
+    return $guru;
+}
+
+
+public function insert()
+{
+    $this->db->insert($this->getTable(), $this->getData());
+    return $this->db->insert_id();
+}
+
+public function update($where)
+{
+    $status = $this->db->update($this->getTable(), $this->getData(), $where);
+    return $status;
+
+}
+
+public function delete($id)
+{
+    $this->db->where('nip', $id);
+    return $this->db->delete($this->getTable());
+}
+
+public function getLastID(){
+    $this->db->select('nip');
+    $this->db->order_by('nip', 'DESC');
+    $this->db->limit(1);
+    $query = $this->db->get($this->getTable());
+    return $query->row();
 }
 }
 ?>
