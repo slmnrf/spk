@@ -48,7 +48,7 @@ class modelNilai extends CI_Model{
     public function getNilaiGuru()
     {
         $query = $this->db->query(
-            'select u.nip, u.namaLengkap, k.kdKriteria, k.kriteria ,n.nilai from guru u, nilai n, kriteria k where u.nip = n.nip AND k.kdKriteria = n.kdKriteria '
+            'select u.nip, u.namaLengkap, k.kdKriteria, k.namaKriteria ,n.nilai from guru u, nilai n, kriteria k where u.nip = n.nip AND k.kdKriteria = n.kdKriteria '
         );
         if($query->num_rows() > 0){
             foreach ($query->result() as $row) {

@@ -190,5 +190,16 @@ Class modelKriteria extends CI_Model {
         return $this->db->delete($table);
     }
 
+    public function getBobotKriteria()
+    {
+        $query = $this->db->query('select namaKriteria, bobot from kriteria');
+        if($query->num_rows() > 0){
+            foreach ( $query->result() as $row) {
+                $bobot[] = $row;
+            }
+            return $bobot;
+        }
+    }
+
 }
 ?>

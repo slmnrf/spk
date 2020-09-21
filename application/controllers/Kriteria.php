@@ -48,7 +48,7 @@ class Kriteria extends CI_Controller {
 	}
 	
 	function tambah(){
-		$this->modelKriteria->kriteria = $this->input->post('kriteria', true);
+		$this->modelKriteria->kriteria = str_replace(" ","_",$this->input->post('kriteria', true));
 		$this->modelKriteria->sifat = $this->input->post('sifat', true);
 		$this->modelKriteria->bobot = $this->input->post('bobot', true);
 		if ($this->modelKriteria->insert() == true) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2020 at 09:21 AM
+-- Generation Time: Sep 21, 2020 at 09:55 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -43,8 +43,14 @@ CREATE TABLE `guru` (
 --
 
 INSERT INTO `guru` (`nip`, `namaLengkap`, `jenisKelamin`, `tempatLahir`, `tanggalLahir`, `mapel`, `alamat`) VALUES
-('19101119121', 'Naruto', 'L', 'konoha', '2020-08-04', 'mtk', 'konoha, jepang'),
-('19101119122', 'sakura', 'P', 'jepang', '2020-08-13', 'ipa', 'tokyo');
+('19101119121', 'Naruto', 'L', 'konoha', '2020-08-04', 'binggris', 'konoha, jepang'),
+('19101119122', 'sakura', 'P', 'jepang', '2020-08-13', 'ipa', 'tokyo'),
+('19101119123', 'Sasuke', 'L', 'jepang', '2020-09-22', 'binggris', 'KONOHA'),
+('19101119124', 'Doraemon', 'L', 'pkl', '2020-07-18', 'binggris', 'tes'),
+('19101119125', 'Nobita', 'P', 'pkl', '2020-09-22', 'ipa', 'pkl'),
+('19101119126', 'Kirito', 'L', 'pkl', '2020-07-18', 'mtk', 'pkl'),
+('19101119127', 'Asuna', 'P', 'pkl', '2020-07-14', 'bindo', 'pkl'),
+('19101119128', 'Aku', 'L', 'pkl', '2020-07-14', 'bindo', 'pkl');
 
 -- --------------------------------------------------------
 
@@ -64,9 +70,11 @@ CREATE TABLE `kriteria` (
 --
 
 INSERT INTO `kriteria` (`kdKriteria`, `namaKriteria`, `sifat`, `bobot`) VALUES
-(18, 'Absensi Guru ', 'c', 2),
-(19, 'Kinerja Guru', 'b', 2),
-(20, 'Fasilitas ', 'c', 3);
+(27, 'Kinerja_Guru', 'b', 25),
+(28, 'Absensi_Guru', 'b', 25),
+(29, 'Wawasan_Guru', 'b', 20),
+(30, 'Tanggung_Jawab', 'b', 15),
+(31, 'Cara_Mengajar', 'b', 15);
 
 -- --------------------------------------------------------
 
@@ -91,6 +99,64 @@ INSERT INTO `login` (`no`, `namaLengkap`, `userName`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `nilai`
+--
+
+CREATE TABLE `nilai` (
+  `nip` varchar(20) NOT NULL,
+  `kdKriteria` int(11) NOT NULL,
+  `nilai` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `nilai`
+--
+
+INSERT INTO `nilai` (`nip`, `kdKriteria`, `nilai`) VALUES
+('19101119121', 27, 4),
+('19101119121', 28, 3),
+('19101119121', 29, 5),
+('19101119121', 30, 5),
+('19101119121', 31, 4),
+('19101119122', 27, 4),
+('19101119122', 28, 4),
+('19101119122', 29, 4),
+('19101119122', 30, 5),
+('19101119122', 31, 4),
+('19101119123', 27, 3),
+('19101119123', 28, 4),
+('19101119123', 29, 4),
+('19101119123', 30, 3),
+('19101119123', 31, 2),
+('19101119124', 27, 4),
+('19101119124', 28, 2),
+('19101119124', 29, 5),
+('19101119124', 30, 3),
+('19101119124', 31, 4),
+('19101119125', 27, 4),
+('19101119125', 28, 3),
+('19101119125', 29, 5),
+('19101119125', 30, 5),
+('19101119125', 31, 4),
+('19101119126', 27, 3),
+('19101119126', 28, 4),
+('19101119126', 29, 5),
+('19101119126', 30, 3),
+('19101119126', 31, 4),
+('19101119127', 27, 4),
+('19101119127', 28, 3),
+('19101119127', 29, 3),
+('19101119127', 30, 4),
+('19101119127', 31, 3),
+('19101119128', 27, 4),
+('19101119128', 28, 4),
+('19101119128', 29, 4),
+('19101119128', 30, 3),
+('19101119128', 31, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `subkriteria`
 --
 
@@ -106,21 +172,31 @@ CREATE TABLE `subkriteria` (
 --
 
 INSERT INTO `subkriteria` (`kdSubKriteria`, `subKriteria`, `nilai`, `kdKriteria`) VALUES
-(1, 'Tidak memadai', 1, 18),
-(2, 'Kurang memadai', 2, 18),
-(3, 'Cukup memadai', 3, 18),
-(4, 'Memadai', 4, 18),
-(5, 'Sangat Memadai', 5, 18),
-(6, 'Tidak memadai', 1, 19),
-(7, 'Kurang memadai', 2, 19),
-(8, 'Cukup memadai', 3, 19),
-(9, 'Memadai', 4, 19),
-(10, 'Sangat Memadai', 5, 19),
-(11, 'Tidak memadai', 1, 20),
-(12, 'Kurang memadai', 2, 20),
-(13, 'Cukup memadai', 3, 20),
-(14, 'Memadai', 4, 20),
-(15, 'Sangat Terlalu', 5, 20);
+(46, 'Kurang Sekali', 1, 27),
+(47, 'Kurang', 2, 27),
+(48, 'Cukup Baik', 3, 27),
+(49, 'Baik', 4, 27),
+(50, 'Sangat Baik', 5, 27),
+(51, 'Kurang Sekali', 1, 28),
+(52, 'Kurang', 2, 28),
+(53, 'Cukup', 3, 28),
+(54, 'Baik', 4, 28),
+(55, 'Sangat Baik', 5, 28),
+(56, 'Kurang Sekali', 1, 29),
+(57, 'Kurang', 2, 29),
+(58, 'Cukup', 3, 29),
+(59, 'Baik', 4, 29),
+(60, 'Sangat Baik', 5, 29),
+(61, 'Kurang Sekali', 1, 30),
+(62, 'Kurang', 2, 30),
+(63, 'Cukup', 3, 30),
+(64, 'Baik', 4, 30),
+(65, 'Sangat Baik', 5, 30),
+(66, 'Kurang Sekali', 1, 31),
+(67, 'Kurang', 2, 31),
+(68, 'Cukup', 3, 31),
+(69, 'Baik', 4, 31),
+(70, 'Sangat Baik', 5, 31);
 
 --
 -- Indexes for dumped tables
@@ -145,6 +221,13 @@ ALTER TABLE `login`
   ADD PRIMARY KEY (`no`);
 
 --
+-- Indexes for table `nilai`
+--
+ALTER TABLE `nilai`
+  ADD KEY `nip` (`nip`),
+  ADD KEY `kdKriteria` (`kdKriteria`);
+
+--
 -- Indexes for table `subkriteria`
 --
 ALTER TABLE `subkriteria`
@@ -158,7 +241,7 @@ ALTER TABLE `subkriteria`
 -- AUTO_INCREMENT for table `kriteria`
 --
 ALTER TABLE `kriteria`
-  MODIFY `kdKriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `kdKriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `login`
@@ -170,7 +253,7 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `subkriteria`
 --
 ALTER TABLE `subkriteria`
-  MODIFY `kdSubKriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `kdSubKriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

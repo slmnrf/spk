@@ -107,6 +107,14 @@
                 </li>
                 </ul>
             </li>
+            <li class="nav-item has-treeview">
+                <a href="<?= base_url('ranking');?>" class="nav-link <?php if($this->uri->segment('1') == 'ranking'){ echo "active";}?>">
+                <i class="nav-icon fas fa-chart-bar"></i>
+                <p>
+                    Ranking
+                </p>
+                </a>
+            </li>
             <li class="nav-header">LAIN-LAIN</li>
             <li class="nav-item">
                 <a href="<?= base_url('kelolaakun');?>" class="nav-link <?php if($this->uri->segment('1') == 'kelolaakun'){ echo "active";}?>">
@@ -118,7 +126,7 @@
             </li>
             <li class="nav-item">
                 <a id="keluar" href="#" class="nav-link">
-                <i class="nav-icon far fa-sign-out"></i>
+                <i class="nav-icon fa fa-reply" aria-hidden="true"></i>
                 <p>
                     Keluar
                 </p>
