@@ -1,6 +1,6 @@
 <?php
 
-Class modelAnalisa extends CI_Model {
+Class ModelAnalisa extends CI_Model {
     var $table = 'guru'; //nama tabel dari database
     var $column_order = array(null, 'nip','namaLengkap',null); //field yang ada di table
     var $column_search = array('nip','namaLengkap'); //field yang diizin untuk pencarian 

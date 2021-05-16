@@ -5,15 +5,15 @@ class Dashboard extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
-		$this->load->Model('modelDashboard');
+		$this->load->Model('ModelDashboard');
         chek_seesion();
     }
 
 	public function index()
 	{
-		$data['guru'] = $this->modelDashboard->getData('nip','jnip','guru');
-		$data['laki'] = $this->modelDashboard->getDataWhere('jenisKelamin','laki','guru','jenisKelamin','L');
-		$data['perempuan'] = $this->modelDashboard->getDataWhere('jenisKelamin','perempuan','guru','jenisKelamin','P');
-		$this->template->load('template','dashboard/contentDashboard',$data);
+		$data['guru'] = $this->ModelDashboard->getData('nip','jnip','guru');
+		$data['laki'] = $this->ModelDashboard->getDataWhere('jenisKelamin','laki','guru','jenisKelamin','L');
+		$data['perempuan'] = $this->ModelDashboard->getDataWhere('jenisKelamin','perempuan','guru','jenisKelamin','P');
+		$this->template->load('Template','Dashboard/ContentDashboard',$data);
 	}
 }

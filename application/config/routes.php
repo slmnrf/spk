@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'auth/login';
 $route['login'] = 'auth/login';
-$route['dashboard'] = 'dashboard';
+$route['dashboard'] = 'Dashboard';
 $route['guru'] = 'guru';
 $route['kelolaakun'] = 'auth/kelolaakun';
 $route['analisa/dataguru'] = 'analisa';

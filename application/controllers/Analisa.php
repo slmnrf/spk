@@ -5,20 +5,20 @@ class Analisa extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
-		$this->load->Model('modelAnalisa');
-		$this->load->Model('modelKriteria');
-		$this->load->Model('modelNilai');
-		$this->load->Model('modelGuru');
+		$this->load->Model('ModelAnalisa');
+		$this->load->Model('ModelKriteria');
+		$this->load->Model('ModelNilai');
+		$this->load->Model('ModelGuru');
         chek_seesion();
     }
 
     function index(){
-        $this->template->load('template','analisa/contentPenilaian');
+        $this->template->load('Template','analisa/contentPenilaian');
     }
 
     function get_data_guru_penilaian()
     {
-        $list = $this->modelAnalisa->get_datatables();
+        $list = $this->ModelAnalisa->get_datatables();
         $data = array();
         $no = $_POST['start'];
         $jk = "";
@@ -30,14 +30,13 @@ class Analisa extends CI_Controller {
             $row[] = $field->namaLengkap;
             // $row[] = "<td class='text-center'><button class='btn btn-primary' onclick=ubah('$field->nip') data-toggle='modal' data-target='#modal-xl'>Ubah</button></td>";
             $row[] = "<td class='text-center'><a href=penilaian/$field->nip>Ubah</a></td>";
-
             $data[] = $row;
         }
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->modelAnalisa->count_all(),
-            "recordsFiltered" => $this->modelAnalisa->count_filtered(),
+            "recordsTotal" => $this->ModelAnalisa->count_all(),
+            "recordsFiltered" => $this->ModelAnalisa->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON
@@ -45,7 +44,7 @@ class Analisa extends CI_Controller {
     }
 
     function ubah(){
-        $detail = $this->modelAnalisa->detail($_GET['nip']);
+        $detail = $this->ModelAnalisa->detail($_GET['nip']);
         $data = array(
             'nip' => $detail['nip'],
             'namaLengkap' => $detail['namaLengkap'],
@@ -54,22 +53,22 @@ class Analisa extends CI_Controller {
     }
 
     function kriteriatable(){
-        $data= $this->modelAnalisa->detailkriteria();
+        $data= $this->ModelAnalisa->detailkriteria();
         echo json_encode($data);
     }
 
     function insertNilai(){ 
         if($this->input->post('nip') > 0){
-            $this->modelNilai->delete($this->input->post('nip'));
+            $this->ModelNilai->delete($this->input->post('nip'));
             $nip = $this->input->post('nip');
             $nilai = $this->input->post('nilai');
             $success = false;
                 foreach ($nilai as $item => $value) {
-                    $this->modelNilai->nip = $nip;
-                    $this->modelNilai->kdKriteria = $item;
-                    $this->modelNilai->nilai = $value;
+                    $this->ModelNilai->nip = $nip;
+                    $this->ModelNilai->kdKriteria = $item;
+                    $this->ModelNilai->nilai = $value;
                     var_dump($nip."\n".$item."\n".$value);
-                    if ($this->modelNilai->insert()) {
+                    if ($this->ModelNilai->insert()) {
                         $success = true;
                     }
                 }
@@ -88,25 +87,25 @@ class Analisa extends CI_Controller {
     {
         $data['dataView'] = $this->getDataInsert();
         if($nip == $this->uri->segment(3, 0)){
-            $data['nilaiGuru'] = $this->modelNilai->getNilaiByguru($this->uri->segment(3, 0));
-            $data['detailGuru'] = $this->modelGuru->detailGuru($this->uri->segment(3, 0));
+            $data['nilaiGuru'] = $this->ModelNilai->getNilaiByguru($this->uri->segment(3, 0));
+            $data['detailGuru'] = $this->ModelGuru->detailGuru($this->uri->segment(3, 0));
         }else{
             $this->session->set_flashdata('errors', 'Berhasil mengubah data :)');
-            $data['nilaiGuru'] = $this->modelNilai->getNilaiByguru($nip);
-            $data['detailGuru'] = $this->modelGuru->detailGuru($nip);
+            $data['nilaiGuru'] = $this->ModelNilai->getNilaiByguru($nip);
+            $data['detailGuru'] = $this->ModelGuru->detailGuru($nip);
         }
-        $this->template->load('template','analisa/FormPenilaian',$data);
+        $this->template->load('Template','analisa/FormPenilaian',$data);
     }
 
     private function getDataInsert()
     {
         $dataView = array();
-        $kriteria = $this->modelKriteria->getAll();
+        $kriteria = $this->ModelKriteria->getAll();
         foreach ($kriteria as $item) {
-            $this->modelKriteria->kdKriteria = $item->kdKriteria;
+            $this->ModelKriteria->kdKriteria = $item->kdKriteria;
             $dataView[$item->kdKriteria] = array(
                 'nama' => $item->namaKriteria,
-                'data' => $this->modelKriteria->getByIdSub(),
+                'data' => $this->ModelKriteria->getByIdSub(),
             );
         }
         return $dataView;

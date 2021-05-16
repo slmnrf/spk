@@ -1,6 +1,6 @@
 <?php
 
-Class modelGuru extends CI_Model {
+Class ModelGuru extends CI_Model {
     var $nip;
     var $namaLengkap;
     var $table = 'guru'; //nama tabel dari database

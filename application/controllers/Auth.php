@@ -5,7 +5,7 @@ class Auth extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->Model('modelLogin');
+        $this->load->Model('ModelLogin');
         $this->load->library('form_validation');
         // chek_seesion();
     }
@@ -14,19 +14,21 @@ class Auth extends CI_Controller {
       $this->load->view('login/Vlogin');
     } 
 
-    function chek_login(){
+    function chek_login(    ){
         if (isset($_POST['submit'])) {
             $username= $this->input->post('username');
             $password= md5($this->input->post('password'));
-            $result=$this->modelLogin->chek($username,$password);
+            $result=$this->ModelLogin->chek($username,$password);
             if (!empty($result)) {
-                $content = $this->modelLogin->getDataLogin("where userName = '$username'")->row_array();
-                $data_session = array('username' => $content['username'],
-                                        'namaLengkap' => $content['namaLengkap']);
+                $content = $this->ModelLogin->getDataLogin("where username = '$username'")->row_array();
+                $data_session = array('username' => $content['userName'],
+                                        'namaLengkap' => $content['namaLengkap'],
+                                        'role' => $content['role']);
                     $this->session->set_userdata(array('status_login'=>'ok'));
                     $this->session->set_userdata('username',$data_session['username']);
                     $this->session->set_userdata('namaLengkap',$data_session['namaLengkap']);
-                    redirect(base_url('dashboard'),$data_session);
+                    $this->session->set_userdata('role',$data_session['role']);
+                    redirect(base_url('Dashboard'),$data_session);
             }else{
                 $this->session->set_flashdata('gagal','username dan password yang anda masukan salah !!!');
                 redirect(base_url("login"));
@@ -42,7 +44,7 @@ class Auth extends CI_Controller {
     }
 
     function kelolaakun(){        
-        $dataakun = $this->modelLogin->tampilAkun('login');
+        $dataakun = $this->ModelLogin->tampilAkun('login');
         $akses="";
         $no=1;
         $html['tabel'] = '<table class="table table-striped">
@@ -51,6 +53,7 @@ class Auth extends CI_Controller {
                     <th style="width: 10px">#</th>
                     <th>Nama Lengkap</th>
                     <th>Username</th>
+                    <th>Role</th>
                     <th>Aksi</th>
                 </tr>
                 </thead>
@@ -60,12 +63,13 @@ class Auth extends CI_Controller {
                     <td>'.$no++.'</td>
                     <td>'.$row->namaLengkap.'</td>
                     <td>'.$row->userName.'</td>
+                    <td>'.$row->role.'</td>
                     <td><a href="#" onclick="javascipt: hapus('.$row->no.')"><i class="fa fa-eraser"></i></a></td>
                     </tr>';
                 }
                 $html['tabel'] .= '</tbody>
             </table>';
-        $this->template->load('template','login/contentKataSandi',$html);
+        $this->template->load('Template','login/contentKataSandi',$html);
     }
 
     function tambahAkun() {          
@@ -78,10 +82,11 @@ class Auth extends CI_Controller {
             'namaLengkap' => $namaLengkap,
             'userName'      => $username,
             'password'     => md5($password),
+            'role'     => $inputAkses,
         );
-        $this->modelLogin->simpan('login', $data);
+        $this->ModelLogin->simpan('login', $data);
         
-        $dataakun = $this->modelLogin->tampilAkun('login');
+        $dataakun = $this->ModelLogin->tampilAkun('login');
         $akses="";
         $no=1;
         $html = '<table class="table table-striped">
@@ -90,6 +95,7 @@ class Auth extends CI_Controller {
                     <th style="width: 10px">#</th>
                     <th>Nama Lengkap</th>
                     <th>Username</th>
+                    <th>Role</th>
                     <th>Aksi</th>
                 </tr>
                 </thead>
@@ -99,6 +105,7 @@ class Auth extends CI_Controller {
                     <td>'.$no++.'</td>
                     <td>'.$row->namaLengkap.'</td>
                     <td>'.$row->userName.'</td>
+                    <td>'.$row->role.'</td>
                     <td><a href="#" onclick="javascipt: hapus('.$row->no.')"><i class="fa fa-eraser"></i></a></td>
                     </tr>';
                 }
@@ -109,7 +116,7 @@ class Auth extends CI_Controller {
 
     function hapusAkun(){
         $no = $_GET['no'];
-        $this->modelLogin->hapus($no);
+        $this->ModelLogin->hapus($no);
         redirect('kelolaakun');
     }
 }

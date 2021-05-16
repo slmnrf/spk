@@ -6,31 +6,74 @@ class Ranking extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('modelKriteria');
-        $this->load->model('modelNilai');
-        $this->load->model('modelGuru');
-        $this->load->model('modelSaw');
+        $this->load->model('ModelKriteria');
+        $this->load->model('ModelNilai');
+        $this->load->model('ModelGuru');
+        $this->load->model('ModelSaw');
     }
 
-    public function index()
+    public function index(){
+        $this->template->load('Template','ranking/vRekapNilai');
+    }
+
+    function get_data_guru()
     {
-		$guru = $this->modelGuru->getAll();
+        $list = $this->ModelGuru->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        $jk = "";
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = $no.".";
+            $row[] = $field->nip;
+            $row[] = $field->namaLengkap;
+            $row[] = $field->mapel;
+            $row[] = "<td class='text-center'><button class='btn btn-info' onclick=detailGuru('$field->nip') data-toggle='modal' data-target='#modal-detail'>Lihat Nilai</button></td>";
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->ModelGuru->count_all(),
+            "recordsFiltered" => $this->ModelGuru->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    function detailGuru() {
+		$detail = $this->ModelGuru->detailGuru($_GET['nip']);
+
+        $data = array(
+            'nip' => $detail['nip'],
+            'namaLengkap' => $detail['namaLengkap'],
+            'mapel' => $detail['mapel'],
+        );
+        echo json_encode($data);
+	}
+    
+    public function penilaian()
+    {
+		$guru = $this->ModelGuru->getAll();
 	
         /**
          * Menghapus table SAW jika ada
          */
-        $this->modelSaw->dropTable();
+        $this->ModelSaw->dropTable();
 
         /**
          * $kriteria data dari table kriteria
          */
-        $kriteria = $this->modelKriteria->getAll();
+        $kriteria = $this->ModelKriteria->getAll();
 
         /**
          * membuat table SAW berdasarkan data dari table kriteria
          * menginputkan semua data nilai
          */
-        $this->modelSaw->createTable($kriteria);
+        $this->ModelSaw->createTable($kriteria);
 
         /**
          * Ambil data dari table SAW untuk perhitungan awal
@@ -62,7 +105,7 @@ class Ranking extends CI_Controller
         /**
          * Hitung perkalian bobot dengan nilai kriteria
          */
-        $bobot = $this->modelKriteria->getBobotKriteria();
+        $bobot = $this->ModelKriteria->getBobotKriteria();
         $this->page->setData('bobot', $bobot);
         $table3 = $this->getCountByBobot($bobot);
         $this->page->setData('table3', $table3);
@@ -70,7 +113,7 @@ class Ranking extends CI_Controller
         /**
          * Add kolom total dan rangking
          */
-        $this->modelSaw->addColumnTotalRangking();
+        $this->ModelSaw->addColumnTotalRangking();
 
         /**
          * Menghitung nilai total
@@ -86,8 +129,8 @@ class Ranking extends CI_Controller
         /**
          * Menghapus table SAW
          */
-		$this->modelSaw->dropTable();
-        $this->template->load('template','ranking/vRanking');
+		$this->ModelSaw->dropTable();
+        $this->template->load('Template','ranking/vRanking');
     }
 	
     // public function noData()
@@ -97,36 +140,36 @@ class Ranking extends CI_Controller
 		
 		private function initialTableSAW($guru)
 		{
-			$nilai = $this->modelNilai->getNilaiGuru();
+			$nilai = $this->ModelNilai->getNilaiGuru();
 			
 			$dataInput = array();
 			$no = 0;
 			foreach ($guru as $item => $itemGuru) {
-				foreach ($nilai as $index => $itemmodelNilai) {
-					if ($itemGuru->nip == $itemmodelNilai->nip) {
+				foreach ($nilai as $index => $itemModelNilai) {
+					if ($itemGuru->nip == $itemModelNilai->nip) {
 						$dataInput[$no]['guru'] = $itemGuru->namaLengkap;
-						$dataInput[$no][$itemmodelNilai->namaKriteria] = $itemmodelNilai->nilai;
+						$dataInput[$no][$itemModelNilai->namaKriteria] = $itemModelNilai->nilai;
 					}
 				}
 				$no++;
 			}
 			
 			foreach ($dataInput as $data => $item){
-				$this->modelSaw->insert($item);
+				$this->ModelSaw->insert($item);
 			}
-			return $this->modelSaw->getAll();
+			return $this->ModelSaw->getAll();
 		}
 		
 		private function getDataSifat()
     {
-		$sawData = $this->modelSaw->getAll();
+		$sawData = $this->ModelSaw->getAll();
         $dataSifat = array();
         foreach ($sawData as $item => $value) {
 			foreach ($value as $x => $z) {
 				if ($x == 'Guru') {
 					continue;
                 }
-                $dataSifat[$x] = $this->modelSaw->getStatus($x);
+                $dataSifat[$x] = $this->ModelSaw->getStatus($x);
             }
         }
         return $dataSifat;
@@ -134,7 +177,7 @@ class Ranking extends CI_Controller
 	
     private function getVlueMinMax($dataSifat)
     {
-		$sawData = $this->modelSaw->getAll();
+		$sawData = $this->ModelSaw->getAll();
         $dataValueMinMax = array();
         foreach ($sawData as $point => $value) {
 			foreach ($value as $x => $z) {
@@ -171,7 +214,7 @@ class Ranking extends CI_Controller
 	
     private function getCountBySifat($dataSifat, $dataValueMinMax)
     {
-		$sawData = $this->modelSaw->getAll();
+		$sawData = $this->ModelSaw->getAll();
         foreach ($sawData as $point => $value) {
 			foreach ($value as $x => $z) {
 				if ($x == 'Guru') {
@@ -190,7 +233,7 @@ class Ranking extends CI_Controller
 								'guru' => $value->Guru
                             );
 							
-                            $this->modelSaw->update($dataUpdate, $where);
+                            $this->ModelSaw->update($dataUpdate, $where);
                         }else{
 							$newData = $dataValueMinMax['min'.$x] / $z ;
                             $dataUpdate = array(
@@ -200,19 +243,19 @@ class Ranking extends CI_Controller
 								'guru' => $value->Guru
                             );
 							
-                            $this->modelSaw->update($dataUpdate, $where);
+                            $this->ModelSaw->update($dataUpdate, $where);
                         }
                     }
                 }
             }
         }
 		
-        return $this->modelSaw->getAll();
+        return $this->ModelSaw->getAll();
     }
 	
     private function countTotal()
     {
-		$sawData = $this->modelSaw->getAll();
+		$sawData = $this->ModelSaw->getAll();
 		
         foreach ($sawData as $item => $value) {
 			$total = 0;
@@ -228,7 +271,7 @@ class Ranking extends CI_Controller
 						'guru' => $value->Guru
                     );
 					
-                    $this->modelSaw->update($dataUpdate, $where);
+                    $this->ModelSaw->update($dataUpdate, $where);
                 }else{
 					$total = $total + $itemData;
                 }
@@ -239,18 +282,18 @@ class Ranking extends CI_Controller
     private function getCountByBobot($bobot)
     {
 		
-		$sawData = $this->modelSaw->getAll();
+		$sawData = $this->ModelSaw->getAll();
         foreach ($sawData as $point => $value) {
 			foreach ($value as $x => $z) {
 				if ($x == 'Guru') {
 					continue;
                 }
-                foreach ($bobot as $item => $itemodelKriteria) {
+                foreach ($bobot as $item => $iteModelKriteria) {
 					
-					if ($x == $itemodelKriteria->namaKriteria) {
+					if ($x == $iteModelKriteria->namaKriteria) {
 						
-						$sawData[$point]->$x =  $z * $itemodelKriteria->bobot ;
-                        $newData = $z * $itemodelKriteria->bobot;
+						$sawData[$point]->$x =  $z * $iteModelKriteria->bobot ;
+                        $newData = $z * $iteModelKriteria->bobot;
                         $dataUpdate = array(
 							$x => $newData
                         );
@@ -258,19 +301,19 @@ class Ranking extends CI_Controller
 							'guru' => $value->Guru
                         );
 						
-                        $this->modelSaw->update($dataUpdate, $where);
+                        $this->ModelSaw->update($dataUpdate, $where);
 						
                     }
                 }
             }
         }
 		
-        return $this->modelSaw->getAll();
+        return $this->ModelSaw->getAll();
     }
 	
     private function getDataRangking()
     {
-		$sawData = $this->modelSaw->getSortTotalByDesc();
+		$sawData = $this->ModelSaw->getSortTotalByDesc();
         $no = 1;
         foreach ($sawData as $item => $value) {
 			$dataUpdate = array(
@@ -280,10 +323,10 @@ class Ranking extends CI_Controller
 				'guru' => $value->Guru
             );
 			
-            $this->modelSaw->update($dataUpdate, $where);
+            $this->ModelSaw->update($dataUpdate, $where);
             $no++;
         }
-        return $this->modelSaw->getAll();
+        return $this->ModelSaw->getAll();
 	}
 	
 	function print_out(){

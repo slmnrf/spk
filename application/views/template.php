@@ -67,7 +67,7 @@
                 with font-awesome or any other icon font library -->
             <li class="nav-header">MENU UTAMA</li>
             <li class="nav-item has-treeview">
-                <a href="<?= base_url('dashboard');?>" class="nav-link <?php if($this->uri->segment('1') == 'dashboard'){ echo "active";}?>">
+                <a href="<?= base_url('dashboard');?>" class="nav-link <?php if($this->uri->segment('1') == 'dashboard' or $this->uri->segment('1') == 'Dashboard'){ echo "active";}?>">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     Dashboard
@@ -82,6 +82,7 @@
                 </p>
                 </a>
             </li>
+  
             <li class="nav-item has-treeview <?php if($this->uri->segment('2') == 'penilaian'){ echo "menu-open";}
                                                     if($this->uri->segment('2') == 'kriteria'){ echo "menu-open";}?>">
                 <a href="#" class="nav-link <?php if($this->uri->segment('2') == 'penilaian'){ echo "menu-open";}
@@ -107,6 +108,8 @@
                 </li>
                 </ul>
             </li>
+    
+            <?php if ($this->session->userdata('role') == "KS"){?>
             <li class="nav-item has-treeview">
                 <a href="<?= base_url('ranking');?>" class="nav-link <?php if($this->uri->segment('1') == 'ranking'){ echo "active";}?>">
                 <i class="nav-icon fas fa-chart-bar"></i>
@@ -115,7 +118,9 @@
                 </p>
                 </a>
             </li>
+            <?php } ?>
             <li class="nav-header">LAIN-LAIN</li>
+            <?php if ($this->session->userdata('role') == "KS"){?>
             <li class="nav-item">
                 <a href="<?= base_url('kelolaakun');?>" class="nav-link <?php if($this->uri->segment('1') == 'kelolaakun'){ echo "active";}?>">
                 <i class="nav-icon far fa-edit"></i>
@@ -124,6 +129,7 @@
                 </p>
                 </a>
             </li>
+            <?php } ?>
             <li class="nav-item">
                 <a id="keluar" href="#" class="nav-link">
                 <i class="nav-icon fa fa-reply" aria-hidden="true"></i>
@@ -150,7 +156,7 @@
                 elseif($this->uri->segment('1') == 'karyawan'){ echo "Data Karyawan";}
                 elseif($this->uri->segment('2') == 'datakaryawan'){ echo "Data Karyawan Magang";}?></h1>
             </div><!-- /.col -->
-            <?php if($this->uri->segment('1') == 'dashboard'){ ?>
+            <?php if($this->uri->segment('1') == 'dashboard' or $this->uri->segment('1') == 'Dashboard'){ ?>
             <div class="col-sm-3 ">
                 <div class="info-box">
                 <span class="info-box-icon bg-info"><i class="far fa-user-circle"></i></span>
@@ -265,6 +271,33 @@
             
             "ajax": {
                 "url": "<?php echo site_url('Guru/get_data_guru')?>",
+                "type": "POST"
+            },
+
+            
+            "columnDefs": [
+            { 
+                "targets": [ 0 ], 
+                "orderable": false, 
+            },
+            ],
+
+        });
+
+    });
+
+    var tableRekap;
+    $(document).ready(function() {
+
+        //datatables
+        tableRekap = $('#tabelRekap').DataTable({ 
+
+            "processing": true, 
+            "serverSide": true, 
+            "order": [], 
+            
+            "ajax": {
+                "url": "<?php echo site_url('Ranking/get_data_guru')?>",
                 "type": "POST"
             },
 

@@ -25,6 +25,7 @@ date_default_timezone_set("Asia/Jakarta");
 |
 */
 $config['base_url'] = 'http://localhost/spk';
+// $config['base_url'] = 'https://spkgurubina.000webhostapp.com/';
 
 /*
 |--------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 <?php
 
-Class modelLogin extends CI_Model {
+Class ModelLogin extends CI_Model {
 
     function chek($username,$password) {
         $this->db->where('userName', $username);

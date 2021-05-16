@@ -1,6 +1,6 @@
 <?php
 
-Class modelKriteria extends CI_Model {
+Class ModelKriteria extends CI_Model {
     public $kdKriteria;
     public $kriteria;
     public $sifat;

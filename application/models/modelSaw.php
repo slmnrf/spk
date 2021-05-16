@@ -1,6 +1,6 @@
 <?php
 
-class modelSaw extends CI_Model{
+class ModelSaw extends CI_Model{
     public function __construct(){
         parent::__construct();
         $this->load->dbforge();

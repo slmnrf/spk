@@ -1,6 +1,6 @@
 <?php
 
-Class modelDashboard extends CI_Model {
+Class ModelDashboard extends CI_Model {
 
     function getData($data,$as,$table){
         return $this->db->query("SELECT COUNT($data) as $as FROM $table")->row();

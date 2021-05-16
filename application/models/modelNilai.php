@@ -1,5 +1,5 @@
 <?php
-class modelNilai extends CI_Model{
+class ModelNilai extends CI_Model{
 
     public $nip;
     public $kdKriteria;

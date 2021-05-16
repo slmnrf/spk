@@ -5,19 +5,19 @@ class Guru extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
-		$this->load->Model('modelGuru');
+		$this->load->Model('ModelGuru');
         chek_seesion();
     }
 
 	public function index()
 	{
-		// $data['autoNik'] = $this->modelKaryawan->autoNik();
-		$this->template->load('template','guru/contentguru');
+		// $data['autoNik'] = $this->ModelKaryawan->autoNik();
+		$this->template->load('Template','Guru/ContentGuru');
 	}
 	
 	function get_data_guru()
     {
-        $list = $this->modelGuru->get_datatables();
+        $list = $this->ModelGuru->get_datatables();
         $data = array();
         $no = $_POST['start'];
         $jk = "";
@@ -35,8 +35,8 @@ class Guru extends CI_Controller {
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->modelGuru->count_all(),
-            "recordsFiltered" => $this->modelGuru->count_filtered(),
+            "recordsTotal" => $this->ModelGuru->count_all(),
+            "recordsFiltered" => $this->ModelGuru->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON
@@ -63,12 +63,12 @@ class Guru extends CI_Controller {
 			'mapel' => $comboMapel,
 			'alamat' => $alamat,
 		);
-			$this->modelGuru->tambahGuru('guru', $dataGuru);
+			$this->ModelGuru->tambahGuru('guru', $dataGuru);
 	}
 	
 	function hapusData(){
 		$nip = $_GET['nip'];
-		$this->modelGuru->hapus('guru',array('nip' => $nip));
+		$this->ModelGuru->hapus('guru',array('nip' => $nip));
 		redirect('guru');
 	}
     
@@ -92,11 +92,11 @@ class Guru extends CI_Controller {
 			'alamat' => $alamat,
 		);
 
-        $queryakun = $this->modelGuru->editData('guru',array('nip' => $nip),$dataGuru);
+        $queryakun = $this->ModelGuru->editData('guru',array('nip' => $nip),$dataGuru);
 	}
 
 	function detailGuru() {
-		$detail = $this->modelGuru->detailGuru($_GET['nip']);
+		$detail = $this->ModelGuru->detailGuru($_GET['nip']);
 		$tglLahir = explode("-", $detail['tanggalLahir']);
 		$tanggalLahir = $tglLahir[2]."-".$tglLahir[1]."-".$tglLahir[0];
 
@@ -115,7 +115,7 @@ class Guru extends CI_Controller {
 	function cmbJenisKelamin(){
 		$cmb = '<select id="jenisKelaminEdit" name="jenisKelaminEdit" class="form-control">
 		<option selected disabled>Pilih Satu</option>';
-        $data = $this->modelGuru->cmbGuru($_GET['nip']);
+        $data = $this->ModelGuru->cmbGuru($_GET['nip']);
         foreach ($data as $row){
         if ($row->jenisKelamin == "L") {
             $cmb .='<option value="L" selected>Laki-laki</option>
@@ -132,7 +132,7 @@ class Guru extends CI_Controller {
 	function cmbMapel(){
 		$cmb = '<select id="editMapel" name="editMapel" class="form-control">
 		<option selected disabled>Pilih Satu</option>';
-        $data = $this->modelGuru->cmbGuru($_GET['nip']);
+        $data = $this->ModelGuru->cmbGuru($_GET['nip']);
         foreach ($data as $row){
         if ($row->mapel == "mtk") {
             $cmb .='<option value="mtk" selected>MATEMATIKA</option>

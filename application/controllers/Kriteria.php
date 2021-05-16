@@ -6,7 +6,7 @@ class Kriteria extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
-		$this->load->Model('modelKriteria');
+		$this->load->Model('ModelKriteria');
         chek_seesion();
     }
 
@@ -16,7 +16,7 @@ class Kriteria extends CI_Controller {
 	}
 
 	function get_data_kriteria(){
-		$list = $this->modelKriteria->get_datatables();
+		$list = $this->ModelKriteria->get_datatables();
         $data = array();
         $no = $_POST['start'];
         $sifat = "";
@@ -39,8 +39,8 @@ class Kriteria extends CI_Controller {
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->modelKriteria->count_all(),
-            "recordsFiltered" => $this->modelKriteria->count_filtered(),
+            "recordsTotal" => $this->ModelKriteria->count_all(),
+            "recordsFiltered" => $this->ModelKriteria->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON
@@ -48,11 +48,11 @@ class Kriteria extends CI_Controller {
 	}
 	
 	function tambah(){
-		$this->modelKriteria->kriteria = str_replace(" ","_",$this->input->post('kriteria', true));
-		$this->modelKriteria->sifat = $this->input->post('sifat', true);
-		$this->modelKriteria->bobot = $this->input->post('bobot', true);
-		if ($this->modelKriteria->insert() == true) {
-			$kdKriteria = $this->modelKriteria->getLastID()->kdKriteria;
+		$this->ModelKriteria->kriteria = str_replace(" ","_",$this->input->post('kriteria', true));
+		$this->ModelKriteria->sifat = $this->input->post('sifat', true);
+		$this->ModelKriteria->bobot = $this->input->post('bobot', true);
+		if ($this->ModelKriteria->insert() == true) {
+			$kdKriteria = $this->ModelKriteria->getLastID()->kdKriteria;
 			$success = false;
 			$subKriteria = array(
 				array('subKriteria' => $this->input->post('v1', true),
@@ -68,10 +68,10 @@ class Kriteria extends CI_Controller {
 			);
 
 			foreach ($subKriteria as $item) {
-				$this->modelKriteria->kdKriteria = $kdKriteria;
-				$this->modelKriteria->subKriteria = $item['subKriteria'];
-				$this->modelKriteria->value = $item['value'];
-				if ($this->modelKriteria->subinsert() == true) {
+				$this->ModelKriteria->kdKriteria = $kdKriteria;
+				$this->ModelKriteria->subKriteria = $item['subKriteria'];
+				$this->ModelKriteria->value = $item['value'];
+				if ($this->ModelKriteria->subinsert() == true) {
 					$success = true;
 				}
 			}
@@ -79,16 +79,16 @@ class Kriteria extends CI_Controller {
 	}
 
 	function detailKriteria(){
-		$data = $this->modelKriteria->detail($_GET['kdKriteria']);
+		$data = $this->ModelKriteria->detail($_GET['kdKriteria']);
         echo json_encode($data);
 	}
 
 	function update(){
-		$this->modelKriteria->kriteria = $this->input->post('eNamaKriteria', true);
-		$this->modelKriteria->sifat = $this->input->post('eSifat', true);
-		$this->modelKriteria->bobot = $this->input->post('eBobot', true);
+		$this->ModelKriteria->kriteria = $this->input->post('eNamaKriteria', true);
+		$this->ModelKriteria->sifat = $this->input->post('eSifat', true);
+		$this->ModelKriteria->bobot = $this->input->post('eBobot', true);
 		$where = array('kdKriteria' => $this->input->post('eKriteria', true));
-		$this->modelKriteria->update($where);
+		$this->ModelKriteria->update($where);
 	}
 
 	function updatesubkriteria(){
@@ -104,17 +104,17 @@ class Kriteria extends CI_Controller {
 
 		foreach ($subKriteria as $item) {
 
-			$this->modelKriteria->kdKriteria = $kdKriteria;
-			$this->modelKriteria->kdSubKriteria = $item['kdSubKriteria'];
-			$this->modelKriteria->subKriteria = $item['subKriteria'];
-			$update = $this->modelKriteria->updatesub();
+			$this->ModelKriteria->kdKriteria = $kdKriteria;
+			$this->ModelKriteria->kdSubKriteria = $item['kdSubKriteria'];
+			$this->ModelKriteria->subKriteria = $item['subKriteria'];
+			$update = $this->ModelKriteria->updatesub();
 		}
 	}
 
 	function delete(){
 		$kdKriteria = $_GET['kdKriteria'];
-		$this->modelKriteria->delete($kdKriteria,"kriteria");
-		$this->modelKriteria->delete($kdKriteria,"subKriteria");
+		$this->ModelKriteria->delete($kdKriteria,"kriteria");
+		$this->ModelKriteria->delete($kdKriteria,"subKriteria");
 		redirect('Kriteria');
 	}
 }
