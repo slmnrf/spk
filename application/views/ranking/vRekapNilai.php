@@ -107,12 +107,13 @@ function detailGuru(nip) {
                     obj = JSON.parse(json);
             $("#divketnilai").text("");
             for(var i = 0; i< obj.length; i++){
-                kolom = '<div class="input-group mb-4">';   
-                kolom += '<input type="text" class="form-control" value='+obj[i].namaKriteria+'>';
-                kolom += '<div class="input-group-prepend">';
-                kolom += '<button type="button" class="btn btn-default">'+obj[i].subKriteria+'</button>';
-                kolom += '</div>';
-                kolom += '</div>';
+                var str = obj[i].namaKriteria;
+                var strBaru = str.replace('_', ' ');
+
+                kolom = '<dl class="row">';
+                    kolom += '<dt class="col-sm-4">'+strBaru+'</dt>';
+                    kolom += '<dd class="col-sm-8">:&nbsp;<span>'+obj[i].subKriteria+'</span></dd>';
+                kolom += '</dl>';
                 $("#divketnilai").append(kolom);
             }
         }
