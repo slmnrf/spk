@@ -168,5 +168,11 @@ public function getLastID(){
     $query = $this->db->get($this->getTable());
     return $query->row();
 }
+public function getDataNilai($nip){
+    $query = "SELECT a.*, b.*,c.namaKriteria FROM nilai as a, subkriteria as b, kriteria as c WHERE a.kdKriteria=b.kdKriteria AND a.nilai=b.nilai AND A.kdKriteria=c.kdKriteria AND a.nip='$nip' GROUP BY a.kdKriteria";
+    $data = $this->db->query($query)->result();
+    return $data;
+}
+
 }
 ?>

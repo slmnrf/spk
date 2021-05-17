@@ -26,7 +26,7 @@
         </div>
         <div class="row no-print">
             <div class="col-12">
-            <a href="ranking/penilaian" rel="noopener" class="btn btn-danger"><i class="fas fa-recycle"></i> Buat Ranking</a> &nbsp;
+            <a href="ranking/penilaian" id="loading" rel="noopener" class="btn btn-danger"><i class="fas fa-recycle"></i> Buat Ranking</a> &nbsp;
             </div>
         </div>
         <!-- /.card -->
@@ -65,41 +65,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Penilaian :</label>
-                            <div class="input-group mb-3">
-                                <input type="hidden" id="kdsub0" name="kdsub0"></input>
-                                <input type="text" class="form-control" id="esItemKriteria0" name="esItemKriteria0">
-                                <div class="input-group-prepend">
-                                    <button type="button" class="btn btn-default">Value : 1</button>
-                                </div>
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="hidden" id="kdsub1" name="kdsub1"></input>
-                                <input type="text" class="form-control" id="esItemKriteria1" name="esItemKriteria1">
-                                <div class="input-group-prepend">
-                                    <button type="button" class="btn btn-success">Value : 2</button>
-                                </div>
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="hidden" id="kdsub2" name="kdsub2"></input>
-                                <input type="text" class="form-control" id="esItemKriteria2" name="esItemKriteria2">
-                                <div class="input-group-prepend">
-                                    <button type="button" class="btn btn-info">Value : 3</button>
-                                </div>
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="hidden" id="kdsub3" name="kdsub3"></input>
-                                <input type="text" class="form-control" id="esItemKriteria3" name="esItemKriteria3">
-                                <div class="input-group-prepend">
-                                    <button type="button" class="btn btn-warning">Value : 4</button>
-                                </div>
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="hidden" id="kdsub4" name="kdsub4"></input>
-                                <input type="text" class="form-control" id="esItemKriteria4" name="esItemKriteria4">
-                                <div class="input-group-prepend">
-                                    <button type="button" class="btn btn-danger">Value : 5</button>
-                                </div>
-                            </div>
+                            <div id="divketnilai"></div>
                         </div>
                     </div>
                 </div>
@@ -130,6 +96,26 @@ function detailGuru(nip) {
             $("#detailNamaGuru").html(obj.namaLengkap);
             $("#detailMapel").html(obj.mapel);
     }
-    })
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '<?php echo base_url() ?>Ranking/ketnilai',
+        data: '&nip=' + nip,
+        success: function (data) {
+            var json = data,
+                    obj = JSON.parse(json);
+            $("#divketnilai").text("");
+            for(var i = 0; i< obj.length; i++){
+                kolom = '<div class="input-group mb-4">';   
+                kolom += '<input type="text" class="form-control" value='+obj[i].namaKriteria+'>';
+                kolom += '<div class="input-group-prepend">';
+                kolom += '<button type="button" class="btn btn-default">'+obj[i].subKriteria+'</button>';
+                kolom += '</div>';
+                kolom += '</div>';
+                $("#divketnilai").append(kolom);
+            }
+        }
+    });
 }
 </script>

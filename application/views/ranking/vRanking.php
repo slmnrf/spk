@@ -286,7 +286,7 @@
         <!-- this row will not appear when printing -->
         <div class="row no-print">
             <div class="col-12">
-            <a href="analisa/penilaian" rel="noopener" class="btn btn-warning"><i class="fas fa-edit"></i> Input Penilaian</a> &nbsp;
+            <!-- <a href="analisa/penilaian" rel="noopener" class="btn btn-warning"><i class="fas fa-edit"></i> Input Penilaian</a> &nbsp; -->
             <button onclick=print_out() class="btn btn-primary float-right"><i class="fas fa-print"></i> Print</button>
             </div>
         </div>

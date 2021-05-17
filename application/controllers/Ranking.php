@@ -46,7 +46,6 @@ class Ranking extends CI_Controller
 
     function detailGuru() {
 		$detail = $this->ModelGuru->detailGuru($_GET['nip']);
-
         $data = array(
             'nip' => $detail['nip'],
             'namaLengkap' => $detail['namaLengkap'],
@@ -54,10 +53,20 @@ class Ranking extends CI_Controller
         );
         echo json_encode($data);
 	}
+
+    function ketnilai(){
+        $data = $this->ModelGuru->getDataNilai($_GET['nip']);
+        echo json_encode($data);
+    }
     
     public function penilaian()
     {
-		$guru = $this->ModelGuru->getAll();
+        $this->createTableSaw();
+        $this->template->load('Template','ranking/vRanking');
+    }
+	
+    public function createTableSaw(){
+        $guru = $this->ModelGuru->getAll();
 	
         /**
          * Menghapus table SAW jika ada
@@ -130,9 +139,8 @@ class Ranking extends CI_Controller
          * Menghapus table SAW
          */
 		$this->ModelSaw->dropTable();
-        $this->template->load('Template','ranking/vRanking');
     }
-	
+
     // public function noData()
     // {
 		//     loadPage('saw/noData');
