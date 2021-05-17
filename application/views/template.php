@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="<?= base_url()?>assets/plugins/css/summernote-bs4.min.css">
     <!-- sweetalert -->
     <link rel="stylesheet" href="<?= base_url()?>assets/plugins/sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="<?= base_url()?>assets/plugins/css/buttonLoader.css">
     <!-- Datatable -->
     <link rel="stylesheet" href="<?= base_url()?>assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url()?>assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -213,6 +214,7 @@
 <script src="<?= base_url()?>assets/plugins/js/jquery.overlayScrollbars.min.js"></script>
 <!-- adminlte -->
 <script src="<?= base_url()?>assets/plugins/js/adminlte.js"></script>
+<script src="<?= base_url()?>assets/plugins/js/jquery.buttonLoader.js"></script>
 <!-- sweetalert -->
 <script src="<?= base_url()?>assets/plugins/sweetalert/sweetalert.min.js"></script>
 <!-- Datatable -->

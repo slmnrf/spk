@@ -26,7 +26,8 @@
         </div>
         <div class="row no-print">
             <div class="col-12">
-            <a href="ranking/penilaian" id="loading" rel="noopener" class="btn btn-danger"><i class="fas fa-recycle"></i> Buat Ranking</a> &nbsp;
+            <!-- <a href="ranking/penilaian" id="loading" rel="noopener" class="btn btn-danger"><i class="fas fa-recycle"></i> Buat Ranking</a> &nbsp; -->
+            <button id="bload" class="btn btn-danger has-spinner">Buat Ranking</button>
             </div>
         </div>
         <!-- /.card -->
@@ -71,7 +72,6 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form> 
         </div>
@@ -118,4 +118,13 @@ function detailGuru(nip) {
         }
     });
 }
+
+$('#bload').click(function () {
+    var btn = $(this);
+    $(btn).buttonLoader('start');
+    setTimeout(function () {
+        $(btn).buttonLoader('stop');
+    }, 5000);
+    window.open("<?php echo base_url() ?>Ranking/penilaian","_self")
+});
 </script>
