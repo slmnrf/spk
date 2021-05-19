@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2020 at 09:55 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.1
+-- Generation Time: May 18, 2021 at 02:16 AM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -86,15 +85,17 @@ CREATE TABLE `login` (
   `no` int(11) NOT NULL,
   `namaLengkap` varchar(30) NOT NULL,
   `userName` char(10) NOT NULL,
-  `password` varchar(100) NOT NULL
+  `password` varchar(100) NOT NULL,
+  `role` enum('KS','G') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `login`
 --
 
-INSERT INTO `login` (`no`, `namaLengkap`, `userName`, `password`) VALUES
-(1, 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3');
+INSERT INTO `login` (`no`, `namaLengkap`, `userName`, `password`, `role`) VALUES
+(2, 'Kepala Sekolah', 'kepsek', '8561863b55faf85b9ad67c52b3b851ac', 'KS'),
+(4, 'Panitia', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'G');
 
 -- --------------------------------------------------------
 
@@ -247,7 +248,7 @@ ALTER TABLE `kriteria`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `subkriteria`
