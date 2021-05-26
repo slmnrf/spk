@@ -47,6 +47,18 @@ class Kriteria extends CI_Controller {
         echo json_encode($output);
 	}
 	
+	function cek_bobot(){
+		$query = "SELECT SUM(bobot) as total FROM kriteria";
+		$querysumbobot = $this->db->query($query)->row_Array();
+		$valbobot = intval($_GET['bobot']);
+		$cekbobot = $querysumbobot['total']+$valbobot;
+		if($cekbobot <= 100){
+			echo 1;
+		}else{
+			echo $cekbobot;
+		}
+	}
+
 	function tambah(){
 		$this->ModelKriteria->kriteria = str_replace(" ","_",$this->input->post('kriteria', true));
 		$this->ModelKriteria->sifat = $this->input->post('sifat', true);
@@ -95,11 +107,11 @@ class Kriteria extends CI_Controller {
 		$kdKriteria = $this->input->post('hiddenkdkriteria',true);
 		$subKriteria = array();
 
-		for($i = 0; $i<= 4; $i++){
-
-			$subKriteria[$i] =   array( 'kdSubKriteria' => $this->input->post('kdsub'. $i, true),
-										'subKriteria' => $this->input->post('esItemKriteria'. $i, true),
-										);
+		for($i = 1; $i<= 5; $i++){
+			$a = $i-1;
+			$subKriteria[$i] =   array( 'kdSubKriteria' => $this->input->post('kdsub'. $a, true),
+										'subKriteria' => $this->input->post('esItemKriteria'. $a, true),
+										'value' => $i);
 		}
 
 		foreach ($subKriteria as $item) {
@@ -107,6 +119,7 @@ class Kriteria extends CI_Controller {
 			$this->ModelKriteria->kdKriteria = $kdKriteria;
 			$this->ModelKriteria->kdSubKriteria = $item['kdSubKriteria'];
 			$this->ModelKriteria->subKriteria = $item['subKriteria'];
+			$this->ModelKriteria->value = $item['value'];
 			$update = $this->ModelKriteria->updatesub();
 		}
 	}

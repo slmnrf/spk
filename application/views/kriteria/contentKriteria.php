@@ -45,7 +45,7 @@
                             <!-- text input -->
                             <div class="form-group">
                                 <label>Kriteria :</label>
-                                <input type="text" class="form-control" id="kriteria" name="kriteria" placeholder="Nama Kriteria">
+                                <input type="text" class="form-control" id="kriteria" name="kriteria" placeholder="Nama Kriteria" required="required" pattern="[A-Za-z0-9]{1,20}">
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                             <!-- text input -->
                             <div class="form-group">
                                 <label>Bobot :</label>
-                                <input type="text" class="form-control" id="bobot" name="bobot" placeholder="Bobot Kriteria">
+                                <input type="number" min="1" class="form-control" id="bobot" name="bobot" placeholder="Bobot Kriteria">
                             </div>
                         </div>
                     </div>
@@ -78,31 +78,31 @@
                             <div class="form-group">
                                 <label>Item Kriteria :</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="v1" name="v1">
+                                    <input type="text" class="form-control" id="v1" name="v1" required="required">
                                     <div class="input-group-prepend">
                                         <button type="button" class="btn btn-default">Value : 1</button>
                                     </div>
                                 </div>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="v2" name="v2">
+                                    <input type="text" class="form-control" id="v2" name="v2" required="required" >
                                     <div class="input-group-prepend">
                                         <button type="button" class="btn btn-success">Value : 2</button>
                                     </div>
                                 </div>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="v3" name="v3">
+                                    <input type="text" class="form-control" id="v3" name="v3" required="required">
                                     <div class="input-group-prepend">
                                         <button type="button" class="btn btn-info">Value : 3</button>
                                     </div>
                                 </div>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="v4" name="v4">
+                                    <input type="text" class="form-control" id="v4" name="v4" required="required">
                                     <div class="input-group-prepend">
                                         <button type="button" class="btn btn-warning">Value : 4</button>
                                     </div>
                                 </div>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="v5" name="v5">
+                                    <input type="text" class="form-control" id="v5" name="v5" required="required" >
                                     <div class="input-group-prepend">
                                         <button type="button" class="btn btn-danger">Value : 5</button>
                                     </div>
@@ -315,27 +315,39 @@
 $(document).ready(function(){
     $('#formInput').on('submit',function(e){
     e.preventDefault(); 
+    var bobot  = $("#bobot").val()
         $.ajax({
-            url:'<?php echo base_url();?>Kriteria/tambah',
-            type:"POST", //method Submit
-            data:new FormData(this), //penggunaan FormData
-            processData:false,
-            contentType:false,
-            cache:false,
-            async:false,
+            type:"GET", //method Submit
+            url:'<?php echo base_url();?>Kriteria/cek_bobot',
+            data: '&bobot=' + bobot,
             success: function (cek) {
-                swal({
-                    title: "Yeah",
-                    text: "Tambah Data Sukses !",
-                    type: "success",
-                    confirmButtonClass: 'btn-success',
-                    confirmButtonText: 'Ok',
-                },
-                function (isConfirm){
-                    if(isConfirm){
-                        window.location.reload();
+                if (cek == 1){
+                    $.ajax({
+                    url:'<?php echo base_url();?>Kriteria/tambah',
+                    type:"POST", //method Submit
+                    data:new FormData(document.getElementById("formInput")), //penggunaan FormData
+                    processData:false,
+                    contentType:false,
+                    cache:false,
+                    async:false,
+                    success: function (cek) {
+                        swal({
+                            title: "Yeah",
+                            text: "Tambah Data Sukses !",
+                            type: "success",
+                            confirmButtonClass: 'btn-success',
+                            confirmButtonText: 'Ok',
+                        },
+                        function (isConfirm){
+                            if(isConfirm){
+                                window.location.reload();
+                            }
+                        });
                     }
                 });
+                }else{
+                    swal("Maks 100", "Nilai total bobot sekarang "+ cek, "warning");
+                }
             }
         });
     });
