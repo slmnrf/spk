@@ -217,6 +217,7 @@
                             <div class="form-group">
                                 <label>Bobot :</label>
                                 <input type="text" class="form-control" id="eBobot" name="eBobot" placeholder="Bobot Kriteria">
+                                <input type="hidden" class="form-control" id="heBobot" name="heBobot">
                             </div>
                         </div>
                     </div>
@@ -316,10 +317,11 @@ $(document).ready(function(){
     $('#formInput').on('submit',function(e){
     e.preventDefault(); 
     var bobot  = $("#bobot").val()
+    var val = 1
         $.ajax({
             type:"GET", //method Submit
             url:'<?php echo base_url();?>Kriteria/cek_bobot',
-            data: '&bobot=' + bobot,
+            data: '&bobot=' + bobot  + '&val=' + val,
             success: function (cek) {
                 if (cek == 1){
                     $.ajax({
@@ -356,27 +358,41 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('#formEditKriteria').on('submit',function(e){
     e.preventDefault(); 
+    var bobot  = $("#eBobot").val()
+    var hebobot  = $("#heBobot").val()
+    var val = 0
             $.ajax({
-                url:'<?php echo base_url();?>Kriteria/update',
-                type:"POST", //method Submit
-                data:new FormData(this), //penggunaan FormData
-                processData:false,
-                contentType:false,
-                cache:false,
-                async:false,
+                url:'<?php echo base_url();?>Kriteria/cek_bobot',
+                type:"GET", //method Submit
+                data: '&bobot=' + bobot  + '&val=' + val + '&hebobot=' + hebobot,
                 success: function (cek) {
-                    swal({
-                        title: "Yeah",
-                        text: "Update Data Sukses !",
-                        type: "success",
-                        confirmButtonClass: 'btn-success',
-                        confirmButtonText: 'Ok',
-                    },
-                    function (isConfirm){
-                        if(isConfirm){
-                            window.location.reload();
+                    if(cek == 1){
+                        $.ajax({
+                        url:'<?php echo base_url();?>Kriteria/update',
+                        type:"POST", //method Submit
+                        data:new FormData(document.getElementById("formEditKriteria")), //penggunaan FormData
+                        processData:false,
+                        contentType:false,
+                        cache:false,
+                        async:false,
+                        success: function (cek) {
+                            swal({
+                                title: "Yeah",
+                                text: "Update Data Sukses !",
+                                type: "success",
+                                confirmButtonClass: 'btn-success',
+                                confirmButtonText: 'Ok',
+                            },
+                            function (isConfirm){
+                                if(isConfirm){
+                                    window.location.reload();
+                                }
+                            });
                         }
                     });
+                    }else{
+                        swal("Maks 100", "Nilai total bobot sekarang "+ cek, "warning");
+                    }
                 }
             });
         });
@@ -478,6 +494,7 @@ function detailItemKriteria(kdKriteria){
                 }
                 $('#eNamaKriteria').val(obj[i].namaKriteria);
                 $('#eBobot').val(obj[i].bobot);
+                $('#heBobot').val(obj[i].bobot);
             }
         }
     });

@@ -50,12 +50,24 @@ class Kriteria extends CI_Controller {
 	function cek_bobot(){
 		$query = "SELECT SUM(bobot) as total FROM kriteria";
 		$querysumbobot = $this->db->query($query)->row_Array();
-		$valbobot = intval($_GET['bobot']);
-		$cekbobot = $querysumbobot['total']+$valbobot;
-		if($cekbobot <= 100){
-			echo 1;
+		if ($_GET['val'] == 1){
+			$valbobot = intval($_GET['bobot']);
+			$cekbobot = $querysumbobot['total']+$valbobot;
+			if($cekbobot <= 100){
+				echo 1;
+			}else{
+				echo $cekbobot;
+			}
 		}else{
-			echo $cekbobot;
+			$valbobot = intval($_GET['bobot']);
+			$hebobot = intval($_GET['hebobot']);
+			$bobot = $hebobot-$valbobot;
+			$cekbobot = $querysumbobot['total']-$bobot;
+			if($cekbobot <= 100){
+				echo 1;
+			}else{
+				echo $cekbobot;
+			}
 		}
 	}
 
