@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2021 at 02:16 AM
+-- Generation Time: Jun 23, 2021 at 03:42 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.4.16
 
@@ -86,7 +86,7 @@ CREATE TABLE `login` (
   `namaLengkap` varchar(30) NOT NULL,
   `userName` char(10) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `role` enum('KS','G') NOT NULL
+  `role` enum('KS','G','AA') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -95,7 +95,8 @@ CREATE TABLE `login` (
 
 INSERT INTO `login` (`no`, `namaLengkap`, `userName`, `password`, `role`) VALUES
 (2, 'Kepala Sekolah', 'kepsek', '8561863b55faf85b9ad67c52b3b851ac', 'KS'),
-(4, 'Panitia', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'G');
+(4, 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'AA'),
+(5, 'Guru', 'guru', '77e69c137812518e359196bb2f5e9bb9', 'G');
 
 -- --------------------------------------------------------
 
@@ -174,10 +175,10 @@ CREATE TABLE `subkriteria` (
 
 INSERT INTO `subkriteria` (`kdSubKriteria`, `subKriteria`, `nilai`, `kdKriteria`) VALUES
 (46, 'Kurang Sekali', 1, 27),
-(47, 'Kurang', 2, 27),
-(48, 'Cukup Baik', 3, 27),
+(47, 'Kurang ', 2, 27),
+(48, 'Cukup Baik Banget', 3, 27),
 (49, 'Baik', 4, 27),
-(50, 'Sangat Baik', 5, 27),
+(50, 'Baik Sekali', 5, 27),
 (51, 'Kurang Sekali', 1, 28),
 (52, 'Kurang', 2, 28),
 (53, 'Cukup', 3, 28),
@@ -242,19 +243,19 @@ ALTER TABLE `subkriteria`
 -- AUTO_INCREMENT for table `kriteria`
 --
 ALTER TABLE `kriteria`
-  MODIFY `kdKriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `kdKriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `subkriteria`
 --
 ALTER TABLE `subkriteria`
-  MODIFY `kdSubKriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `kdSubKriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

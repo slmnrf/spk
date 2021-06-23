@@ -84,7 +84,8 @@
                 </p>
                 </a>
             </li>
-            <?php if ($this->session->userdata('role') == "G"){?>
+            <?php 
+            if ($this->session->userdata('role') == "G" OR $this->session->userdata('role') == "AA"){?>
             <li class="nav-item has-treeview <?php if($this->uri->segment('2') == 'penilaian'){ echo "menu-open";}
                                                     if($this->uri->segment('2') == 'kriteria'){ echo "menu-open";}?>">
                 <a href="#" class="nav-link <?php if($this->uri->segment('2') == 'penilaian'){ echo "menu-open";}
@@ -111,7 +112,7 @@
                 </ul>
             </li>
             <?php } ?>
-            <?php if ($this->session->userdata('role') == "KS"){?>
+            <?php if ($this->session->userdata('role') == "KS" OR $this->session->userdata('role') == "AA"){?>
             <li class="nav-item has-treeview">
                 <a href="<?= base_url('ranking');?>" class="nav-link <?php if($this->uri->segment('1') == 'ranking'){ echo "active";}?>">
                 <i class="nav-icon fas fa-chart-bar"></i>
@@ -122,7 +123,7 @@
             </li>
             <?php } ?>
             <li class="nav-header">LAIN-LAIN</li>
-            <?php if ($this->session->userdata('role') == "G"){?>
+            <?php if ($this->session->userdata('role') == "AA"){?>
             <li class="nav-item">
                 <a href="<?= base_url('kelolaakun');?>" class="nav-link <?php if($this->uri->segment('1') == 'kelolaakun'){ echo "active";}?>">
                 <i class="nav-icon far fa-edit"></i>
