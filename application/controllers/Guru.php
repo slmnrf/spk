@@ -21,14 +21,20 @@ class Guru extends CI_Controller {
         $data = array();
         $no = $_POST['start'];
         $jk = "";
+        $ex = "";
         foreach ($list as $field) {
+            if($this->session->userdata('role') == "KS" OR $this->session->userdata('role') == "AA"){
+                $ex = "<td class='text-center'><button class='btn btn-info' onclick=detailGuru('$field->nip') data-toggle='modal' data-target='#modal-detail'>Lihat</button>&nbsp;<button onclick=hapusData('$field->nip') class='btn btn-danger'>Hapus</button></td>";
+            }else{
+                $ex = "<td class='text-center'><button class='btn btn-info' onclick=detailGuru('$field->nip') data-toggle='modal' data-target='#modal-detail'>Lihat</button></td>";
+            }
             $no++;
             $row = array();
             $row[] = $no.".";
             $row[] = $field->nip;
             $row[] = $field->namaLengkap;
             $row[] = $field->mapel;
-            $row[] = "<td class='text-center'><button class='btn btn-info' onclick=detailGuru('$field->nip') data-toggle='modal' data-target='#modal-detail'>Lihat</button>&nbsp;<button onclick=hapusData('$field->nip') class='btn btn-danger'>Hapus</button></td>";
+            $row[] = $ex;
 
             $data[] = $row;
         }
@@ -63,7 +69,9 @@ class Guru extends CI_Controller {
 			'mapel' => $comboMapel,
 			'alamat' => $alamat,
 		);
+
 			$this->ModelGuru->tambahGuru('guru', $dataGuru);
+			$this->ModelGuru->tambahGuru('historyguru', $dataGuru);
 	}
 	
 	function hapusData(){
@@ -92,7 +100,8 @@ class Guru extends CI_Controller {
 			'alamat' => $alamat,
 		);
 
-        $queryakun = $this->ModelGuru->editData('guru',array('nip' => $nip),$dataGuru);
+        $this->ModelGuru->editData('guru',array('nip' => $nip),$dataGuru);
+        $this->ModelGuru->editData('historyguru',array('nip' => $nip),$dataGuru);
 	}
 
 	function detailGuru() {

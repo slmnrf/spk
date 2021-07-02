@@ -122,6 +122,14 @@
                 </a>
             </li>
             <?php } ?>
+            <li class="nav-item has-treeview">
+                <a href="<?= base_url('histori');?>" class="nav-link <?php if($this->uri->segment('1') == 'histori'){ echo "active";}?>">
+                <i class="nav-icon fas fa-history"></i>
+                <p>
+                    Histori
+                </p>
+                </a>
+            </li>
             <li class="nav-header">LAIN-LAIN</li>
             <?php if ($this->session->userdata('role') == "AA"){?>
             <li class="nav-item">
@@ -328,6 +336,31 @@
             
             "ajax": {
                 "url": "<?php echo site_url('Kriteria/get_data_kriteria')?>",
+                "type": "POST"
+            },
+            
+            "columnDefs": [
+            { 
+                "targets": [ 0 ], 
+                "orderable": false, 
+            },
+            ],
+
+        });
+
+    });
+    
+    var tabelHistori;
+    $(document).ready(function() {
+        //datatables
+        tabelHistori = $('#tabelHistori').DataTable({ 
+
+            "processing": true, 
+            "serverSide": true, 
+            "order": [], 
+            
+            "ajax": {
+                "url": "<?php echo site_url('Histori/get_data_histori')?>",
                 "type": "POST"
             },
             

@@ -27,16 +27,15 @@
             </address>
             </div>
             <!-- /.col -->
-            <!-- <div class="col-sm-8 invoice-col">
-                <h1 class="text-right">Tabel Perangkingan Guru Teladan</h1><br>
-            </div> -->
+            <div class="col-sm-8 invoice-col">
+                <h6 class="text-right">Tanggal Cetak Terakhir :<b> <?= $this->page->getData('tanggalcetak');?></b></h6><br>
+            </div>
             <!-- /.col -->
             
             <!-- /.col -->
         </div>
         <!-- /.row -->
 
-        <!-- Table row -->
         <div class="row">
             <div class="col-12 table-responsive">
             <strong>Tabel Nilai Awal</strong><br>
@@ -298,22 +297,7 @@
 </section>
 
 <script type='text/javascript'>
-    // function print_out(status){
-    //     window.print();  
-    // }
-
     function print_out(status){
-        $.ajax({
-            type : "POST",
-            url: '<?php echo base_url() ?>Ranking/print_out',
-            dataType : 'html',
-            success: function (cek) {
-                if (cek == 1){
-                window.print();  
-                }else{
-                console.log("disini");
-                }
-            }
-        });
+        window.print();  
     }
 </script>

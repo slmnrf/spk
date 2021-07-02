@@ -28,7 +28,7 @@ class Auth extends CI_Controller {
                     $this->session->set_userdata('username',$data_session['username']);
                     $this->session->set_userdata('namaLengkap',$data_session['namaLengkap']);
                     $this->session->set_userdata('role',$data_session['role']);
-                    redirect(base_url('Dashboard'),$data_session);
+                    redirect(base_url('dashboard'),$data_session);
             }else{
                 $this->session->set_flashdata('gagal','username dan password yang anda masukan salah !!!');
                 redirect(base_url("login"));

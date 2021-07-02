@@ -1,99 +1,77 @@
 <?php
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Ranking extends CI_Controller
-{
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->model('ModelKriteria');
-        $this->load->model('ModelNilai');
-        $this->load->model('ModelGuru');
-        $this->load->model('ModelSaw');
-        $this->load->model('ModelHistory');
+class Histori extends CI_Controller {
+
+	function __construct() {
+		parent::__construct();
+		$this->load->Model('ModelSaw');
+		$this->load->Model('ModelHistory');
+		$this->load->Model('ModelGuru');
+        chek_seesion();
     }
 
-    public function index(){
-        $this->template->load('Template','ranking/vRekapNilai');
-    }
+	public function index()
+	{
+		$this->template->load('Template','ranking/vHistoryTabel');
+	}
 
-    function get_data_guru()
-    {
-        $list = $this->ModelGuru->get_datatables();
+    function get_data_histori(){
+		$list = $this->ModelHistory->get_datatables();
         $data = array();
         $no = $_POST['start'];
-        $jk = "";
+        $ex = "";
         foreach ($list as $field) {
+            if($this->session->userdata('role') == "KS" OR $this->session->userdata('role') == "AA"){
+                $ex = "<td class='text-center'><a class='btn btn-info' href=histori/viewhistori/$field->datePrint>Lihat </a>&nbsp;<button onclick=hapusData('$field->datePrint') class='btn btn-danger'>Hapus</button></td>";
+            }else{
+                $ex = "<td class='text-center'><a class='btn btn-info' href=histori/viewhistori/$field->datePrint>Lihat </a></td>";
+            }
             $no++;
             $row = array();
             $row[] = $no.".";
-            $row[] = $field->nip;
-            $row[] = $field->namaLengkap;
-            $row[] = $field->mapel;
-            $row[] = "<td class='text-center'><button class='btn btn-info' onclick=detailGuru('$field->nip') data-toggle='modal' data-target='#modal-detail'>Lihat Nilai</button></td>";
-
+            $row[] = $field->datePrint;
+			$row[] = $ex;
             $data[] = $row;
         }
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->ModelGuru->count_all(),
-            "recordsFiltered" => $this->ModelGuru->count_filtered(),
+            "recordsTotal" => $this->ModelHistory->count_all(),
+            "recordsFiltered" => $this->ModelHistory->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON
         echo json_encode($output);
-    }
-
-    function detailGuru() {
-		$detail = $this->ModelGuru->detailGuru($_GET['nip']);
-        $data = array(
-            'nip' => $detail['nip'],
-            'namaLengkap' => $detail['namaLengkap'],
-            'mapel' => $detail['mapel'],
-        );
-        echo json_encode($data);
 	}
 
-    function ketnilai(){
-        $data = $this->ModelGuru->getDataNilai($_GET['nip']);
-        echo json_encode($data);
-    }
-    
-    public function penilaian()
+    public function viewhistori($ex)
     {
-        $this->createTableSaw();
-        $this->template->load('Template','ranking/vRanking');
+        $this->HistoryView($ex);
+        $this->template->load('Template','ranking/vHistory');
     }
-	
-    public function createTableSaw(){
-        $guru = $this->ModelGuru->getAll();
-	
+
+    public function HistoryView($item){
         /**
          * Menghapus table SAW jika ada
          */
         $this->ModelSaw->dropTable();
-        $this->ModelHistory->dropTable();
-        $this->ModelHistory->dropTableKriteriaTemp();
     
         /**
          * $kriteria data dari table kriteria
          */
-        $kriteria = $this->ModelKriteria->getAll();
+        $kriteria = $this->ModelHistory->getAllHistoryKriteria($item);
 
         /**
          * membuat table SAW berdasarkan data dari table kriteria
          * menginputkan semua data nilai
          */
         $this->ModelSaw->createTable($kriteria);
-        $this->ModelHistory->createTable();
-        $this->ModelHistory->createTableKriteriaTemp();
 
         /**
          * Ambil data dari table SAW untuk perhitungan awal
          */
-        $table1 = $this->initialTableSAW($guru);
-        $this->initialTableHistory($guru);
+        $table1 = $this->initialTableSAW($item);
         $this->page->setData('table1', $table1);
 
 
@@ -107,7 +85,7 @@ class Ranking extends CI_Controller
         /**
          * Mengambil nilai maksimal dan minimal berdasarkan sifat
          */
-        $dataValueMinMax = $this->getVlueMinMax($dataSifat);
+        $dataValueMinMax = $this->getVlueMinMax($dataSifat, $item);
         $this->page->setData('valueMinMax', $dataValueMinMax);
 
         /**
@@ -120,7 +98,7 @@ class Ranking extends CI_Controller
         /**
          * Hitung perkalian bobot dengan nilai kriteria
          */
-        $bobot = $this->ModelKriteria->getBobotKriteria();
+        $bobot = $this->ModelHistory->getBobotKriteria($item);
         $this->page->setData('bobot', $bobot);
         $table3 = $this->getCountByBobot($bobot);
         $this->page->setData('table3', $table3);
@@ -141,103 +119,54 @@ class Ranking extends CI_Controller
         $tableFinal = $this->getDataRangking();
         $this->page->setData('tableFinal', $tableFinal);
 
+        // Tanggal Cetak
+        $tanggalcetak = $item;
+        $this->page->setData('tanggalcetak', $tanggalcetak);
         /**
          * Menghapus table SAW
          */
 		$this->ModelSaw->dropTable();
     }
 
-    // public function noData()
-    // {
-		//     loadPage('saw/noData');
-		// }
 		
-		private function initialTableSAW($guru)
+		private function initialTableSAW($item)
 		{
-			$nilai = $this->ModelNilai->getNilaiGuru();
-			
+			$nilai = $this->ModelHistory->getAllHistory($item);
+			$guru = $this->ModelGuru->getAllHistoryGuru();
 			$dataInput = array();
 			$no = 0;
-			foreach ($guru as $item => $itemGuru) {
-				foreach ($nilai as $index => $itemModelNilai) {
-					if ($itemGuru->nip == $itemModelNilai->nip) {
-						$dataInput[$no]['guru'] = $itemGuru->namaLengkap;
-						$dataInput[$no][$itemModelNilai->namaKriteria] = $itemModelNilai->nilai;
-					}
-				}
-				$no++;
-			}
+
+            foreach ($guru as $item => $itemGuru) {
+                foreach ($nilai as $index => $itemModelNilai) {
+                    if($itemGuru->namaLengkap == $itemModelNilai->Guru){
+                        $dataInput[$no]['guru'] = $itemModelNilai->Guru;
+                        $dataInput[$no][$itemModelNilai->namaKriteria] = $itemModelNilai->nilai;
+                    }
+                }
+                $no++;
+            }
 			
-			foreach ($dataInput as $data => $item){
-				$this->ModelSaw->insert($item);
+			foreach ($dataInput as $data => $s){
+				$this->ModelSaw->insert($s);
 			}
 			return $this->ModelSaw->getAll();
 		}
 
-        //===============================================Tabel History==================================================================================================
-        //==============================================================================================================================================================
-
-        private function initialTableHistory($guru){
-            $nilai = $this->ModelNilai->getNilaiGuru();
-            $kriteria = $this->ModelKriteria->getAll();
-
-			$dataInputHistoryTemp = array();
-			$dataInputKriteriaTemp = array();
-			$noHistory = 0;
-            $tgl = date("Y-m-d H:i:s");
-            $d = str_replace(" ","-",$tgl);
-            foreach ($guru as $item => $itemGuru) {
-                foreach ($nilai as $index => $itemModelNilai) {
-                    if ($itemGuru->nip == $itemModelNilai->nip) {
-                        $dataInputHistoryTemp[$noHistory]['datePrint'] = $d;
-                        $dataInputHistoryTemp[$noHistory]['guru'] = $itemModelNilai->namaLengkap;
-                        $dataInputHistoryTemp[$noHistory]['kdKriteria'] = $itemModelNilai->kdKriteria;
-                        $dataInputHistoryTemp[$noHistory]['nilai'] = $itemModelNilai->nilai;
-                    }
-                    $noHistory++;
-                }
-            }
-
-            $noKriteria = 0;
-            
-            foreach ($kriteria as $s => $a){
-                $dataInputKriteriaTemp[$noKriteria]['datePrint'] = $d;
-                $dataInputKriteriaTemp[$noKriteria]['kdKriteria'] = $a->kdKriteria;
-                $dataInputKriteriaTemp[$noKriteria]['namaKriteria'] = $a->namaKriteria;
-                $dataInputKriteriaTemp[$noKriteria]['sifat'] = $a->sifat;
-                $dataInputKriteriaTemp[$noKriteria]['bobot'] = $a->bobot;
-                $noKriteria++;
-            }
-			
-            
-            foreach ($dataInputHistoryTemp as $data => $item){
-                $this->ModelHistory->insert($item);
-            }
-
-            foreach($dataInputKriteriaTemp as $data => $item){
-                $this->ModelHistory->insertKriteriaTemp($item);
-            }
-			return $this->ModelHistory->getAll();
-			return $this->ModelHistory->getAllKriteriaTemp();
-        }
 		
-        //===============================================Tabel Kriteria Temp==================================================================================================
-        //===================================================================================================================================================================
-
-		private function getDataSifat()
-        {
-            $sawData = $this->ModelSaw->getAll();
-            $dataSifat = array();
-            foreach ($sawData as $item => $value) {
-                foreach ($value as $x => $z) {
-                    if ($x == 'Guru') {
-                        continue;
-                    }
-                    $dataSifat[$x] = $this->ModelSaw->getStatus($x);
+	private function getDataSifat()
+    {
+		$sawData = $this->ModelSaw->getAll();
+        $dataSifat = array();
+        foreach ($sawData as $item => $value) {
+			foreach ($value as $x => $z) {
+				if ($x == 'Guru') {
+					continue;
                 }
+                $dataSifat[$x] = $this->ModelSaw->getStatus($x);
             }
-            return $dataSifat;
         }
+        return $dataSifat;
+    }
 	
     private function getVlueMinMax($dataSifat)
     {
@@ -308,7 +237,6 @@ class Ranking extends CI_Controller
                             );
 							
                             $this->ModelSaw->update($dataUpdate, $where);
-                            // $this->ModelHistory->update($dataUpdate, $where);
                         }
                     }
                 }
@@ -337,7 +265,6 @@ class Ranking extends CI_Controller
                     );
 					
                     $this->ModelSaw->update($dataUpdate, $where);
-                    // $this->ModelHistory->update($dataUpdate, $where);
                 }else{
 					$total = $total + $itemData;
                 }
@@ -368,7 +295,6 @@ class Ranking extends CI_Controller
                         );
 						
                         $this->ModelSaw->update($dataUpdate, $where);
-                        // $this->ModelHistory->update($dataUpdate, $where);
 						
                     }
                 }
@@ -391,18 +317,15 @@ class Ranking extends CI_Controller
             );
 			
             $this->ModelSaw->update($dataUpdate, $where);
-            // $this->ModelHistory->update($dataUpdate, $where);
             $no++;
         }
         return $this->ModelSaw->getAll();
 	}
-
-    public function print_out(){
-	
-        $this->ModelHistory->getAllDataTemp();
-        $this->ModelHistory->dropTable();
-        $this->ModelHistory->dropTableKriteriaTemp();
-        echo 1;
-    }
-    
+   
+    public function hapusData(){
+		$dp = $_GET['dp'];
+		$this->ModelHistory->deleteHistory('history',$dp);
+		$this->ModelHistory->deleteHistory('historykriteria',$dp);
+		redirect('histori');
+	}
 }

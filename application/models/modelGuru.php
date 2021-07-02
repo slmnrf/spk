@@ -121,6 +121,10 @@ private function getTable(){
     return 'guru';
 }
 
+private function getTableHistoryGuru(){
+    return 'historyguru';
+}
+
 private function getData(){
     $data = array(
         'namaLengkap' => $this->namaLengkap
@@ -133,6 +137,18 @@ public function getAll()
 {
     $guru = array();
     $query = $this->db->get($this->getTable());
+    if($query->num_rows() > 0){
+        foreach ($query->result() as $row) {
+            $guru[] = $row;
+        }
+    }
+    return $guru;
+}
+
+public function getAllHistoryGuru()
+{
+    $guru = array();
+    $query = $this->db->get($this->getTableHistoryGuru());
     if($query->num_rows() > 0){
         foreach ($query->result() as $row) {
             $guru[] = $row;
@@ -174,5 +190,11 @@ public function getDataNilai($nip){
     return $data;
 }
 
+public function copyDataGuru(){
+    $query = $this->db->get($this->getTable());
+    foreach ($query->result() as $row) {
+        $this->db->insert('historyguru',$row);
+    }
+}
 }
 ?>

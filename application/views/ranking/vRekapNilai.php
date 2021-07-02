@@ -126,6 +126,6 @@ $('#bload').click(function () {
     setTimeout(function () {
         $(btn).buttonLoader('stop');
     }, 5000);
-    window.open("<?php echo base_url() ?>Ranking/penilaian","_self")
+    window.open("<?php echo base_url() ?>ranking/viewprint","_self")
 });
 </script>

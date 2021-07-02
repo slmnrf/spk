@@ -29,7 +29,7 @@ class Analisa extends CI_Controller {
             $row[] = $field->nip;
             $row[] = $field->namaLengkap;
             // $row[] = "<td class='text-center'><button class='btn btn-primary' onclick=ubah('$field->nip') data-toggle='modal' data-target='#modal-xl'>Ubah</button></td>";
-            $row[] = "<td class='text-center'><a href=penilaian/$field->nip>Ubah</a></td>";
+            $row[] = "<td class='text-center'><a class='btn btn-info' href=penilaian/$field->nip>Ubah</a></td>";
             $data[] = $row;
         }
 

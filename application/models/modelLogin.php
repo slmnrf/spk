@@ -27,6 +27,7 @@ Class ModelLogin extends CI_Model {
 	function tampilakun($table){
         $this->db->select('*');
         $this->db->from($table);
+		$this->db->where('userName !=', 'admin');
         $hasil = $this->db->get();
         return $hasil->result();
 	}
