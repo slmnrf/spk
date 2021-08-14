@@ -11,6 +11,7 @@ class Ranking extends CI_Controller
         $this->load->model('ModelGuru');
         $this->load->model('ModelSaw');
         $this->load->model('ModelHistory');
+        chek_seesion();
     }
 
     public function index(){
