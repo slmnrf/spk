@@ -6,11 +6,13 @@
         <!-- /.card -->
 
         <div class="card">
+        <?php if($this->session->userdata('role') == "AA" OR $this->session->userdata('role') == "KS") { ?>
         <div class="card-header">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
                 <span class="fa fa-user-plus"> Tambah Data Guru</span>
             </button>
         </div>
+        <?php } ?>
         <!-- /.card-header -->
         <div class="card-body">
             <table id="tabelGuru" class="table table-bordered table-striped">
@@ -196,7 +198,9 @@
         </div>
         <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            <?php if($this->session->userdata('role') == "AA" OR $this->session->userdata('role') == "KS") { ?>
             <button type="submit" class="btn btn-primary" id="submitEditButton">Ubah</button>
+            <?php } ?>
         </div>
             </form>
         </div>

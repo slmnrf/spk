@@ -85,7 +85,7 @@
                 </a>
             </li>
             <?php 
-            if ($this->session->userdata('role') == "G" OR $this->session->userdata('role') == "AA"){?>
+            if ($this->session->userdata('role') == "KS" OR $this->session->userdata('role') == "G"){?>
             <li class="nav-item has-treeview <?php if($this->uri->segment('2') == 'penilaian'){ echo "menu-open";}
                                                     if($this->uri->segment('2') == 'kriteria'){ echo "menu-open";}?>">
                 <a href="#" class="nav-link <?php if($this->uri->segment('2') == 'penilaian'){ echo "menu-open";}
@@ -103,16 +103,18 @@
                     <p>Input Penilaian</p>
                     </a>
                 </li>
+                <?php if($this->session->userdata('role') == "KS"){?>
                 <li class="nav-item">
                     <a href="<?= base_url('analisa/kriteria')?>" class="nav-link <?php if($this->uri->segment('2') == 'kriteria'){ echo "active";}?>">
                     <i class="nav-icon fas fa-database"></i>
                     <p>Input Kriteria</p>
                     </a>
                 </li>
+                <?php } ?>
                 </ul>
             </li>
             <?php } ?>
-            <?php if ($this->session->userdata('role') == "KS" OR $this->session->userdata('role') == "AA"){?>
+            <?php if ($this->session->userdata('role') == "KS"){?>
             <li class="nav-item has-treeview">
                 <a href="<?= base_url('ranking');?>" class="nav-link <?php if($this->uri->segment('1') == 'ranking'){ echo "active";}?>">
                 <i class="nav-icon fas fa-chart-bar"></i>
@@ -121,17 +123,17 @@
                 </p>
                 </a>
             </li>
-            <?php } ?>
             <li class="nav-item has-treeview">
                 <a href="<?= base_url('histori');?>" class="nav-link <?php if($this->uri->segment('1') == 'histori'){ echo "active";}?>">
-                <i class="nav-icon fas fa-history"></i>
-                <p>
-                    Histori
-                </p>
+                    <i class="nav-icon fas fa-history"></i>
+                    <p>
+                        Histori
+                    </p>
                 </a>
             </li>
+            <?php } ?>
             <li class="nav-header">LAIN-LAIN</li>
-            <?php if ($this->session->userdata('role') == "AA"){?>
+            <?php if ($this->session->userdata('role') == "KS"){?>
             <li class="nav-item">
                 <a href="<?= base_url('kelolaakun');?>" class="nav-link <?php if($this->uri->segment('1') == 'kelolaakun'){ echo "active";}?>">
                 <i class="nav-icon far fa-edit"></i>
