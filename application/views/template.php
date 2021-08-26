@@ -97,13 +97,14 @@
                 </p>
                 </a>
                 <ul class="nav nav-treeview">
+                <?php if($this->session->userdata('role') == "G") {?>
                 <li class="nav-item">
                     <a href="<?= base_url('analisa/penilaian')?>" class="nav-link <?php if($this->uri->segment('2') == 'penilaian'){ echo "active";}?>">
                     <i class="nav-icon fas fa-calculator"></i>
                     <p>Input Penilaian</p>
                     </a>
                 </li>
-                <?php if($this->session->userdata('role') == "KS"){?>
+                <?php }else if($this->session->userdata('role') == "KS"){?>
                 <li class="nav-item">
                     <a href="<?= base_url('analisa/kriteria')?>" class="nav-link <?php if($this->uri->segment('2') == 'kriteria'){ echo "active";}?>">
                     <i class="nav-icon fas fa-database"></i>
