@@ -23,7 +23,7 @@ class Histori extends CI_Controller {
         $ex = "";
         foreach ($list as $field) {
             if($this->session->userdata('role') == "KS" OR $this->session->userdata('role') == "AA"){
-                $ex = "<td class='text-center'><a class='btn btn-info' href=histori/viewhistori/$field->datePrint>Lihat </a>&nbsp;<button onclick=hapusData('$field->datePrint') class='btn btn-danger'>Hapus</button></td>";
+                $ex = "<td class='text-center'><a class='btn btn-info' href=histori/viewhistori/$field->datePrint>Lihat </a>&nbsp;<td class='text-center'><a class='btn btn-success' href=histori/resultrangking/$field->datePrint>Hasil </a>&nbsp;<button onclick=hapusData('$field->datePrint') class='btn btn-danger'>Hapus</button></td>";
             }else{
                 $ex = "<td class='text-center'><a class='btn btn-info' href=histori/viewhistori/$field->datePrint>Lihat </a></td>";
             }
@@ -45,13 +45,19 @@ class Histori extends CI_Controller {
         echo json_encode($output);
 	}
 
+    public function resultrangking($item){
+        $this->HistoryView($item,'hasil');
+        $this->template->load('Template', 'ranking/Hasil');
+    }
+
     public function viewhistori($ex)
     {
-        $this->HistoryView($ex);
+        $this->HistoryView($ex,'getAll');
         $this->template->load('Template','ranking/vHistory');
     }
 
-    public function HistoryView($item){
+    public function HistoryView($item,$a){
+        $getdata = $a;
         /**
          * Menghapus table SAW jika ada
          */
@@ -116,11 +122,12 @@ class Histori extends CI_Controller {
         /**
          * Mengambil data yang sudah di rangking
          */
-        $tableFinal = $this->getDataRangking();
+        $tableFinal = $this->getDataRangking($getdata);
         $this->page->setData('tableFinal', $tableFinal);
 
         // Tanggal Cetak
         $tanggalcetak = $item;
+        
         $this->page->setData('tanggalcetak', $tanggalcetak);
         /**
          * Menghapus table SAW
@@ -304,7 +311,7 @@ class Histori extends CI_Controller {
         return $this->ModelSaw->getAll();
     }
 	
-    private function getDataRangking()
+    private function getDataRangking($a)
     {
 		$sawData = $this->ModelSaw->getSortTotalByDesc();
         $no = 1;
@@ -319,7 +326,12 @@ class Histori extends CI_Controller {
             $this->ModelSaw->update($dataUpdate, $where);
             $no++;
         }
-        return $this->ModelSaw->getAll();
+        if($a == "getAll"){
+            return $this->ModelSaw->getAll();
+        }else{
+            return $this->ModelSaw->hasil();
+        }
+        
 	}
    
     public function hapusData(){

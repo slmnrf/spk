@@ -68,6 +68,19 @@ class ModelSaw extends CI_Model{
         $this->dbforge->add_column($this->getTable(), $fields);
     }
 
+    public function hasil(){
+        $this->db->order_by('Rangking', 'ASC');
+        $this->db->limit(3);
+        $this->db->select('Guru');
+        $query = $this->db->get($this->getTable());
+        if($query->num_rows() > 0){
+            foreach ( $query->result() as $row) {
+                $saw[] = $row;
+            }
+            return $saw;
+        }
+    }
+
     public function getSortTotalByDesc()
     {
         $this->db->order_by('Total', 'DESC');
